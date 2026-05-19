@@ -1,0 +1,103 @@
+---
+/**
+ * Location · dirección + iframe Maps lazy.
+ * Reemplazá site.address y site.address.mapsEmbed con tus datos reales.
+ */
+import { site } from "../data/site";
+---
+
+<section class="location section" id="direccion">
+  <div class="container location__grid">
+    <div class="location__info reveal">
+      <p class="eyebrow">— Dirección</p>
+      <h2 class="location__title">
+        Vení a <span class="gradient-text">EON</span>.
+      </h2>
+      <address class="location__address">
+        <p class="location__line"><strong>{site.address.street}</strong></p>
+        <p class="location__line">{site.address.city}</p>
+        <p class="location__line">{site.address.country}</p>
+      </address>
+      <a class="location__cta" href={site.address.mapsLink} target="_blank" rel="noopener">
+        Cómo llegar
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="location__map reveal reveal--delay-1">
+      <iframe
+        src={site.address.mapsEmbed}
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Ubicación de EON"
+      ></iframe>
+    </div>
+  </div>
+</section>
+
+<style>
+  .location__grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: var(--space-7);
+    align-items: stretch;
+  }
+  .location__info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+  .location__title {
+    font-size: var(--fs-2xl);
+    margin-block: var(--space-2) var(--space-3);
+  }
+  .location__address {
+    font-style: normal;
+    color: var(--c-fg-muted);
+    line-height: var(--lh-snug);
+  }
+  .location__line { margin-bottom: var(--space-1); }
+  .location__line strong { color: var(--c-fg); }
+
+  .location__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+    padding: 0.75rem 1.3rem;
+    border: 1px solid var(--c-neon-cyan);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-display);
+    font-size: var(--fs-sm);
+    letter-spacing: var(--ls-wide);
+    text-transform: uppercase;
+    color: var(--c-fg);
+    box-shadow: 0 0 12px rgba(37, 212, 242, 0.25);
+    transition: box-shadow var(--dur-base), transform var(--dur-fast);
+  }
+  .location__cta:hover {
+    box-shadow: 0 0 18px rgba(37, 212, 242, 0.55);
+    transform: translateY(-1px);
+  }
+
+  .location__map {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--c-border);
+    aspect-ratio: 16 / 11;
+    background: var(--c-bg-elev);
+    box-shadow: var(--glow-brand);
+  }
+  .location__map iframe {
+    width: 100%; height: 100%; border: 0;
+    filter: invert(0.9) hue-rotate(180deg) saturate(0.7);
+  }
+
+  @media (max-width: 860px) {
+    .location__grid { grid-template-columns: 1fr; }
+    .location__map { aspect-ratio: 16 / 12; }
+  }
+</style>

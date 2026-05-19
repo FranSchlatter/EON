@@ -1,0 +1,92 @@
+---
+/**
+ * CustomCursor · estilos del cursor mira CS2.
+ * La lógica JS está en /scripts/cursor.js (creó el DOM dinámicamente para
+ * no penalizar a usuarios mobile/reduced-motion con HTML extra).
+ */
+---
+
+<style is:global>
+  .eon-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    margin: -20px 0 0 -20px;       /* centrar en el puntero */
+    pointer-events: none;
+    z-index: var(--z-cursor);
+    transition: opacity var(--dur-fast) var(--ease-out);
+    mix-blend-mode: difference;
+  }
+
+  .eon-cursor__ring,
+  .eon-cursor__dot,
+  .eon-cursor__line {
+    position: absolute;
+    background: var(--c-neon-cyan);
+    box-shadow: 0 0 6px var(--c-neon-cyan);
+  }
+
+  /* Anillo circular */
+  .eon-cursor__ring {
+    inset: 0;
+    background: transparent;
+    border: 1.5px solid var(--c-neon-cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(37, 212, 242, 0.6);
+    transition: transform var(--dur-base) var(--ease-spring),
+                border-color var(--dur-base) var(--ease-out);
+  }
+
+  /* Punto central */
+  .eon-cursor__dot {
+    top: 50%; left: 50%;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform var(--dur-base) var(--ease-spring);
+  }
+
+  /* Líneas de la mira (4 segmentos) */
+  .eon-cursor__line {
+    --len: 7px;
+    --thick: 1.5px;
+  }
+  .eon-cursor__line--top {
+    top: -2px; left: 50%;
+    width: var(--thick); height: var(--len);
+    transform: translateX(-50%);
+  }
+  .eon-cursor__line--bottom {
+    bottom: -2px; left: 50%;
+    width: var(--thick); height: var(--len);
+    transform: translateX(-50%);
+  }
+  .eon-cursor__line--left {
+    top: 50%; left: -2px;
+    width: var(--len); height: var(--thick);
+    transform: translateY(-50%);
+  }
+  .eon-cursor__line--right {
+    top: 50%; right: -2px;
+    width: var(--len); height: var(--thick);
+    transform: translateY(-50%);
+  }
+
+  /* Hover en links/botones: la mira se "engancha" */
+  .eon-cursor.is-hover .eon-cursor__ring {
+    transform: scale(1.4);
+    border-color: var(--c-neon-magenta);
+    box-shadow: 0 0 16px rgba(232, 60, 200, 0.8);
+  }
+  .eon-cursor.is-hover .eon-cursor__dot {
+    transform: translate(-50%, -50%) scale(0.5);
+    background: var(--c-neon-magenta);
+  }
+
+  /* Click: la mira se contrae */
+  .eon-cursor.is-down .eon-cursor__ring {
+    transform: scale(0.85);
+  }
+</style>

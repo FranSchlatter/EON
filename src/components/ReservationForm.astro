@@ -1,0 +1,206 @@
+---
+/**
+ * ReservationForm · reservas corporativas, cumpleaños, eventos.
+ *
+ * El envío se hace desde /scripts/reservation.js (Web3Forms).
+ * Configurar:
+ *   1) Crear key en https://web3forms.com
+ *   2) Pegar en data-access-key abajo (o en .env como PUBLIC_WEB3FORMS_KEY)
+ */
+import { eventTypes } from "../data/venue";
+import { site } from "../data/site";
+
+const accessKey = import.meta.env.PUBLIC_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HERE";
+---
+
+<section class="reservations section" id="contacto">
+  <div class="container reservations__grid">
+    <aside class="reservations__intro reveal">
+      <p class="eyebrow">— Reservas</p>
+      <h2 class="reservations__title">
+        Tu evento, <span class="gradient-text">en su nivel máximo</span>.
+      </h2>
+      <p class="reservations__lead">
+        Eventos corporativos, cumpleaños, encuentros de comunidad o fin de año.
+        Contanos qué necesitás y armamos la experiencia.
+      </p>
+      <ul class="reservations__bullets">
+        <li>Capacidad para grupos de 10 a 200 personas</li>
+        <li>Catering y mixología de autor</li>
+        <li>Streaming y transmisión profesional</li>
+      </ul>
+    </aside>
+
+    <form
+      class="reservations__form reveal reveal--delay-1"
+      data-form="reservation"
+      data-access-key={accessKey}
+      novalidate
+    >
+      <input type="hidden" name="redirect" value="false" />
+      {/* Honeypot anti-spam (no debe completarse) */}
+      <input type="checkbox" name="botcheck" class="sr-only" tabindex="-1" autocomplete="off" />
+
+      <div class="field">
+        <label for="name">Nombre completo</label>
+        <input id="name" name="name" type="text" required autocomplete="name" />
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required autocomplete="email" />
+        </div>
+        <div class="field">
+          <label for="phone">Teléfono</label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel" />
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="event_type">Tipo de evento</label>
+          <select id="event_type" name="event_type" required>
+            <option value="" disabled selected>Elegí una opción</option>
+            {eventTypes.map((t) => (
+              <option value={t.value}>{t.label}</option>
+            ))}
+          </select>
+        </div>
+        <div class="field">
+          <label for="event_date">Fecha tentativa</label>
+          <input id="event_date" name="event_date" type="date" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="attendees">Cantidad de asistentes</label>
+        <input id="attendees" name="attendees" type="number" min="1" />
+      </div>
+
+      <div class="field">
+        <label for="message">Contanos más</label>
+        <textarea id="message" name="message" rows="4" placeholder="Detalles, requerimientos, dudas…"></textarea>
+      </div>
+
+      <button type="submit" class="btn-neon btn-neon--lg">Enviar reserva</button>
+
+      <p class="reservations__status" data-form-status role="status" aria-live="polite"></p>
+      <p class="reservations__fallback">
+        ¿Preferís email directo? Escribinos a <a href={`mailto:${site.email}`}>{site.email}</a>.
+      </p>
+    </form>
+  </div>
+</section>
+
+<script type="module" src="/scripts/reservation.js"></script>
+
+<style>
+  .reservations__grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: var(--space-8);
+    align-items: start;
+  }
+
+  .reservations__title {
+    font-size: var(--fs-3xl);
+    margin-block: var(--space-2) var(--space-5);
+  }
+  .reservations__lead {
+    color: var(--c-fg-muted);
+    margin-bottom: var(--space-5);
+  }
+  .reservations__bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    color: var(--c-fg-muted);
+  }
+  .reservations__bullets li {
+    padding-left: var(--space-5);
+    position: relative;
+  }
+  .reservations__bullets li::before {
+    content: "✦";
+    position: absolute;
+    left: 0;
+    color: var(--c-neon-cyan);
+    text-shadow: 0 0 6px rgba(37, 212, 242, 0.6);
+  }
+
+  .reservations__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    background: var(--c-bg-elev);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    box-shadow: 0 0 64px rgba(139, 94, 229, 0.08) inset;
+  }
+
+  .field { display: flex; flex-direction: column; gap: var(--space-2); }
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+  }
+
+  .field label {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    letter-spacing: var(--ls-wider);
+    text-transform: uppercase;
+    color: var(--c-fg-muted);
+  }
+  .field input,
+  .field select,
+  .field textarea {
+    background: var(--c-bg);
+    border: 1px solid var(--c-border);
+    color: var(--c-fg);
+    padding: 0.85rem 1rem;
+    border-radius: var(--radius-sm);
+    transition: border-color var(--dur-fast) var(--ease-out),
+                box-shadow var(--dur-fast) var(--ease-out);
+    width: 100%;
+  }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    outline: none;
+    border-color: var(--c-neon-magenta);
+    box-shadow: 0 0 0 3px rgba(232, 60, 200, 0.18);
+  }
+  .field textarea { resize: vertical; min-height: 110px; font-family: inherit; }
+  .field select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='%23a3a1b8' d='M4 6l4 4 4-4'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+  }
+
+  .reservations__status {
+    font-size: var(--fs-sm);
+    min-height: 1.4em;
+  }
+  .reservations__status[data-type="success"] { color: var(--c-neon-cyan); }
+  .reservations__status[data-type="error"]   { color: #ff5577; }
+
+  .reservations__fallback {
+    font-size: var(--fs-sm);
+    color: var(--c-fg-muted);
+  }
+  .reservations__fallback a {
+    color: var(--c-neon-cyan);
+    border-bottom: 1px dashed var(--c-neon-cyan);
+  }
+
+  @media (max-width: 860px) {
+    .reservations__grid { grid-template-columns: 1fr; gap: var(--space-6); }
+    .field-row { grid-template-columns: 1fr; }
+  }
+</style>

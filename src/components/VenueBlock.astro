@@ -1,0 +1,140 @@
+---
+/**
+ * VenueBlock · bloque imagen + texto con sticky stacking.
+ *
+ * Técnica: cada bloque es `position: sticky; top: 0; min-height: 100vh`.
+ * Mientras scroleás, el bloque actual queda pegado al top y el siguiente
+ * sube desde abajo y lo cubre. Resultado: la sensación de que el contenido
+ * sube en vez de que el usuario baje. CSS puro, sin JS.
+ *
+ * `flip` invierte la columna imagen↔texto en desktop.
+ */
+import type { VenueBlock as VenueBlockData } from "../data/venue";
+
+interface Props extends VenueBlockData {
+  flip?: boolean;
+}
+
+const { eyebrow, title, body, image, imageAlt, flip = false } = Astro.props;
+---
+
+<article class={`venue-block ${flip ? "is-flip" : ""}`}>
+  <div class="venue-block__inner container">
+    <div class="venue-block__media">
+      {/* Placeholder gradient mientras no haya foto. Cuando llegue el archivo,
+          el <img> debajo lo cubre automáticamente. */}
+      <div class="venue-block__media-placeholder" aria-hidden="true"></div>
+      <img
+        src={image}
+        alt={imageAlt}
+        loading="lazy"
+        decoding="async"
+        onerror="this.style.display='none'"
+      />
+    </div>
+
+    <div class="venue-block__content">
+      <p class="eyebrow">{eyebrow}</p>
+      <h3 class="venue-block__title">{title}</h3>
+      <p class="venue-block__body">{body}</p>
+    </div>
+  </div>
+</article>
+
+<style>
+  /* --- Sticky stacking ---------------------------------------
+     Cada bloque se "pinea" al top hasta que el siguiente lo
+     desplaza. El bg opaco asegura que cubra al anterior y no
+     se vea a través.                                           */
+  .venue-block {
+    position: sticky;
+    top: 0;
+    min-height: 100vh;
+    min-height: 100svh; /* respeta UI mobile del navegador */
+    background: var(--c-bg);
+    display: flex;
+    align-items: center;
+    padding-block: var(--space-7);
+  }
+
+  .venue-block__inner {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: var(--space-7);
+    align-items: center;
+    width: 100%;
+  }
+  .venue-block.is-flip .venue-block__inner { grid-template-columns: 1fr 1.1fr; }
+  .venue-block.is-flip .venue-block__media   { order: 2; }
+  .venue-block.is-flip .venue-block__content { order: 1; }
+
+  /* --- Media ------------------------------------------------- */
+  .venue-block__media {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--c-border);
+    background: var(--c-bg-elev);
+    box-shadow: var(--glow-brand);
+  }
+  .venue-block__media img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  .venue-block__media-placeholder {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(37, 212, 242, 0.25), transparent 55%),
+      radial-gradient(circle at 70% 70%, rgba(232, 60, 200, 0.25), transparent 55%),
+      var(--c-bg-soft);
+  }
+
+  /* --- Content ----------------------------------------------- */
+  .venue-block__title {
+    font-size: var(--fs-2xl);
+    margin-block: var(--space-2) var(--space-4);
+  }
+  .venue-block__body {
+    font-size: var(--fs-base);
+    color: var(--c-fg-muted);
+    max-width: 50ch;
+  }
+
+  /* --- Progressive enhancement -------------------------------
+     En navegadores con scroll-driven animations (Chrome 115+,
+     Edge), el bloque saliente se desvanece y achica sutilmente
+     a medida que el siguiente lo cubre. Sin soporte, queda el
+     sticky stack plano (que ya cumple). */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .venue-block {
+        animation: venue-exit linear forwards;
+        animation-timeline: view();
+        animation-range: exit 0% exit 90%;
+      }
+      @keyframes venue-exit {
+        to {
+          opacity: 0.35;
+          transform: scale(0.94);
+          filter: blur(2px);
+        }
+      }
+    }
+  }
+
+  /* --- Mobile ------------------------------------------------- */
+  /* Sticky funciona en mobile igual, pero achicamos el alto y
+     compactamos la grilla. */
+  @media (max-width: 860px) {
+    .venue-block { padding-block: var(--space-6); }
+    .venue-block__inner,
+    .venue-block.is-flip .venue-block__inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-5);
+    }
+    .venue-block.is-flip .venue-block__media   { order: 1; }
+    .venue-block.is-flip .venue-block__content { order: 2; }
+  }
+</style>

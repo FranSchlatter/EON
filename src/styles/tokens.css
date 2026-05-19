@@ -1,0 +1,95 @@
+/* ============================================================
+   EON · Design Tokens
+   Punto único de verdad para colores, tipografías y espaciados.
+   Cambiar acá impacta toda la landing.
+   ============================================================ */
+
+:root {
+  /* --- Brand · paleta extraída del logo EON --- */
+  --c-bg:            #000000;
+  --c-bg-elev:       #0a0a12;
+  --c-bg-soft:       #12121c;
+  --c-fg:            #f4f4f7;
+  --c-fg-muted:      #a3a1b8;
+  --c-border:        rgba(255, 255, 255, 0.08);
+
+  --c-neon-cyan:     #25d4f2;
+  --c-neon-violet:   #8b5ee5;
+  --c-neon-magenta:  #e83cc8;
+
+  /* Gradiente principal del logo, usado en wordmark, CTA y acentos */
+  --grad-brand:
+    linear-gradient(90deg,
+      var(--c-neon-cyan) 0%,
+      var(--c-neon-violet) 50%,
+      var(--c-neon-magenta) 100%);
+
+  --grad-brand-soft:
+    linear-gradient(90deg,
+      rgba(37, 212, 242, 0.15) 0%,
+      rgba(139, 94, 229, 0.15) 50%,
+      rgba(232, 60, 200, 0.15) 100%);
+
+  /* Glows reutilizables */
+  --glow-cyan:    0 0 12px rgba(37, 212, 242, 0.55), 0 0 32px rgba(37, 212, 242, 0.25);
+  --glow-magenta: 0 0 12px rgba(232, 60, 200, 0.55), 0 0 32px rgba(232, 60, 200, 0.25);
+  --glow-brand:   0 0 18px rgba(139, 94, 229, 0.45), 0 0 48px rgba(232, 60, 200, 0.25);
+
+  /* --- Tipografía --- */
+  /* Display = titulares (geométrica tipo Eurostile). Body = lectura. */
+  --font-display: "Orbitron", "Rajdhani", system-ui, sans-serif;
+  --font-body:    "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, "Cascadia Code", monospace;
+
+  /* Escala tipográfica fluida (clamp = mobile-first sin breakpoints rotos) */
+  --fs-xs:   clamp(0.75rem, 0.72rem + 0.15vw, 0.85rem);
+  --fs-sm:   clamp(0.875rem, 0.85rem + 0.2vw, 1rem);
+  --fs-base: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
+  --fs-lg:   clamp(1.125rem, 1rem + 0.6vw, 1.375rem);
+  --fs-xl:   clamp(1.5rem, 1.25rem + 1.2vw, 2rem);
+  --fs-2xl:  clamp(2rem, 1.5rem + 2.5vw, 3rem);
+  --fs-3xl:  clamp(2.5rem, 1.8rem + 4vw, 4.5rem);
+  --fs-hero: clamp(2.75rem, 1.8rem + 5.5vw, 6rem);
+
+  --lh-tight: 1.1;
+  --lh-snug:  1.25;
+  --lh-base:  1.55;
+
+  --ls-tight:   -0.02em;
+  --ls-normal:  0;
+  --ls-wide:    0.08em;
+  --ls-wider:   0.18em;
+
+  /* --- Espaciado / layout --- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+
+  --container-max: 1280px;
+  --container-pad: clamp(1rem, 2.5vw, 2rem);
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  /* --- Animación --- */
+  --ease-out:    cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast:    180ms;
+  --dur-base:    320ms;
+  --dur-slow:    640ms;
+  --dur-marquee: 40s;
+
+  /* --- Z-index --- */
+  --z-base:    1;
+  --z-content: 10;
+  --z-header:  100;
+  --z-cursor:  9999;
+}

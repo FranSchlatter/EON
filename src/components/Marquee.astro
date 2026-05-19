@@ -1,0 +1,88 @@
+---
+/**
+ * Marquee · "TU LUGAR PARA" + items en loop infinito.
+ * Técnica: duplicamos el contenido del track y animamos translateX -50%.
+ * Loop perfecto, sin saltos, sin JS.
+ */
+import { marqueeItems } from "../data/venue";
+
+const items = [...marqueeItems];
+---
+
+<section class="marquee-section" id="marquee" aria-label="Tipos de eventos">
+  <div class="marquee-section__inner">
+    <span class="marquee-section__prefix">Tu lugar para</span>
+
+    <div class="marquee">
+      <div class="marquee__track">
+        {[...items, ...items].map((item, i) => (
+          <span class={`marquee__item ${i % 2 === 1 ? "is-alt" : ""}`}>
+            {item}
+            <span class="marquee__sep" aria-hidden="true">✦</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .marquee-section {
+    background: var(--c-bg);
+    border-block: 1px solid var(--c-border);
+    padding-block: var(--space-6);
+    overflow: hidden;
+  }
+  .marquee-section__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+  }
+  .marquee-section__prefix {
+    flex-shrink: 0;
+    padding-inline: var(--container-pad);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--fs-xl);
+    letter-spacing: var(--ls-wide);
+    text-transform: uppercase;
+    color: var(--c-fg);
+    background: var(--grad-brand);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+    white-space: nowrap;
+  }
+  .marquee {
+    flex: 1;
+    min-width: 0; /* permite que se achique en flex */
+  }
+  .marquee__item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-5);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--fs-xl);
+    letter-spacing: var(--ls-wide);
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--c-fg);
+  }
+  .marquee__item.is-alt {
+    color: transparent;
+    -webkit-text-stroke: 1px var(--c-fg-muted);
+  }
+  .marquee__sep {
+    font-size: var(--fs-base);
+    color: var(--c-neon-magenta);
+    text-shadow: 0 0 6px rgba(232, 60, 200, 0.7);
+    -webkit-text-stroke: 0;
+  }
+
+  @media (max-width: 720px) {
+    .marquee-section__inner { flex-direction: column; align-items: stretch; gap: var(--space-3); }
+    .marquee-section__prefix { font-size: var(--fs-lg); }
+    .marquee__item { font-size: var(--fs-lg); }
+  }
+</style>

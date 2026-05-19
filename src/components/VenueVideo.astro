@@ -1,0 +1,102 @@
+---
+/**
+ * VenueVideo · contenedor 16:9 responsive listo para reemplazar el video.
+ * Cuando llegue el archivo:
+ *   1. ponelo en /public/videos/venue.mp4 (y opcional .webm)
+ *   2. agregale un poster en /public/images/venue-poster.jpg
+ *   3. descomentá el <video> y eliminá el placeholder
+ *
+ * El bloque ya está marcado con `.reveal` para el scroll reveal.
+ */
+const hasVideo = false; // toggle cuando llegue el archivo
+---
+
+<section class="venue-video section" aria-label="Tour del venue">
+  <div class="container">
+    <div class="venue-video__frame reveal">
+      {hasVideo ? (
+        <video
+          class="venue-video__el"
+          src="/videos/venue.mp4"
+          poster="/images/venue-poster.jpg"
+          preload="metadata"
+          playsinline
+          muted
+          loop
+          autoplay
+          controls
+        ></video>
+      ) : (
+        <div class="venue-video__placeholder">
+          <div class="venue-video__pulse"></div>
+          <p class="venue-video__label">Video del venue · próximamente</p>
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .venue-video__frame {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--c-border);
+    background: var(--c-bg-elev);
+    box-shadow: var(--glow-brand);
+  }
+  .venue-video__el {
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+
+  .venue-video__placeholder {
+    position: absolute; inset: 0;
+    display: grid;
+    place-items: center;
+    background:
+      radial-gradient(circle at 30% 40%, rgba(37, 212, 242, 0.18), transparent 40%),
+      radial-gradient(circle at 70% 60%, rgba(232, 60, 200, 0.18), transparent 40%),
+      var(--c-bg-elev);
+  }
+  .venue-video__pulse {
+    width: 92px; height: 92px;
+    border-radius: 50%;
+    background: var(--grad-brand);
+    box-shadow: var(--glow-brand);
+    position: relative;
+    animation: pulse 2.4s var(--ease-out) infinite;
+  }
+  .venue-video__pulse::before {
+    content: "";
+    position: absolute; inset: 8px;
+    border-radius: 50%;
+    background: var(--c-bg);
+    display: grid; place-items: center;
+  }
+  .venue-video__pulse::after {
+    content: "▶";
+    position: absolute; inset: 0;
+    display: grid; place-items: center;
+    color: var(--c-fg);
+    font-size: 28px;
+    margin-left: 4px;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1);   opacity: 1; }
+    50%      { transform: scale(1.06); opacity: 0.92; }
+  }
+
+  .venue-video__label {
+    position: absolute;
+    bottom: var(--space-5);
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    letter-spacing: var(--ls-wider);
+    text-transform: uppercase;
+    color: var(--c-fg-muted);
+  }
+</style>

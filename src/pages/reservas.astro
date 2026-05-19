@@ -1,0 +1,30 @@
+---
+/**
+ * /reservas · página separada con el formulario completo.
+ * Mantiene Header + Footer para que la navegación se sienta continua.
+ */
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import ReservationForm from "../components/ReservationForm.astro";
+import { site } from "../data/site";
+
+const title = `Reservas · ${site.name}`;
+const description =
+  "Reservá tu evento en EON: eventos corporativos, cumpleaños, esports, streaming y más. Contanos qué necesitás y armamos la experiencia.";
+---
+
+<BaseLayout title={title} description={description}>
+  <Header />
+  <main class="reservas-page">
+    <ReservationForm />
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .reservas-page {
+    /* compensa header fijo */
+    padding-top: 72px;
+  }
+</style>

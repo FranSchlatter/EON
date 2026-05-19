@@ -1,0 +1,153 @@
+/* ============================================================
+   EON · Animaciones reutilizables
+   Marquee, scroll-reveal, glows, hovers neón.
+   ============================================================ */
+
+/* --- Marquee infinito (CSS-only) ---------------------------- */
+/* El track contiene 2 copias del contenido y se desplaza -50%, */
+/* dando un loop perfectamente continuo.                        */
+@keyframes marquee-x {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.marquee {
+  --marquee-gap: var(--space-6);
+  overflow: hidden;
+  position: relative;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.marquee__track {
+  display: flex;
+  gap: var(--marquee-gap);
+  width: max-content;
+  animation: marquee-x var(--dur-marquee) linear infinite;
+  will-change: transform;
+}
+.marquee:hover .marquee__track { animation-play-state: paused; }
+
+/* --- Scroll reveal ----------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity var(--dur-slow) var(--ease-out),
+    transform var(--dur-slow) var(--ease-out);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal--delay-1 { transition-delay: 80ms;  }
+.reveal--delay-2 { transition-delay: 160ms; }
+.reveal--delay-3 { transition-delay: 240ms; }
+
+/* --- Scroll stage (appear + disappear) ---------------------- */
+/* Cada bloque entra al viewport, se queda activo, y al salir   */
+/* hacia arriba se va con la misma curva. Coreografía controla- */
+/* da desde scroll-reveal.js (.is-active / .is-past).           */
+.scroll-stage {
+  opacity: 0;
+  transform: translateY(60px) scale(0.97);
+  transition:
+    opacity var(--dur-slow) var(--ease-out),
+    transform var(--dur-slow) var(--ease-out);
+  will-change: opacity, transform;
+}
+.scroll-stage.is-active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.scroll-stage.is-past {
+  opacity: 0;
+  transform: translateY(-60px) scale(0.97);
+}
+
+/* --- Glow pulsante para botones/acentos -------------------- */
+@keyframes neon-pulse {
+  0%, 100% { box-shadow: var(--glow-brand); }
+  50%      { box-shadow: var(--glow-magenta); }
+}
+
+/* --- Botón neón -------------------------------------------- */
+.btn-neon {
+  --btn-pad-y: 0.85rem;
+  --btn-pad-x: 1.6rem;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--btn-pad-y) var(--btn-pad-x);
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  color: var(--c-fg);
+  background: transparent;
+  border: 1.5px solid var(--c-neon-magenta);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--glow-magenta);
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out),
+    background var(--dur-base) var(--ease-out);
+}
+.btn-neon::before {
+  content: "";
+  position: absolute; inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: var(--grad-brand);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-out);
+  pointer-events: none;
+}
+.btn-neon:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--glow-brand);
+}
+.btn-neon:hover::before { opacity: 1; }
+.btn-neon:active { transform: translateY(0); }
+
+.btn-neon--lg {
+  --btn-pad-y: 1.05rem;
+  --btn-pad-x: 2.1rem;
+  font-size: var(--fs-base);
+}
+
+/* --- Underline animado en links de nav --------------------- */
+.nav-link {
+  position: relative;
+  padding-block: var(--space-2);
+  font-size: var(--fs-sm);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--c-fg-muted);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 2px;
+  background: var(--grad-brand);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+.nav-link:hover,
+.nav-link:focus-visible {
+  color: var(--c-fg);
+}
+.nav-link:hover::after,
+.nav-link:focus-visible::after {
+  transform: scaleX(1);
+}

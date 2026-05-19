@@ -1,0 +1,126 @@
+---
+/**
+ * Hero · imagen de fondo + título + CTA.
+ * El fondo está como gradiente CSS hasta que llegue la foto del venue.
+ * Reemplazá la regla .hero__bg en <style> por una imagen real cuando esté.
+ */
+---
+
+<section class="hero" id="hero">
+  <div class="hero__bg" aria-hidden="true"></div>
+  <div class="hero__grid" aria-hidden="true"></div>
+
+  <div class="container hero__inner">
+    <p class="eyebrow reveal">— EON · Gaming Center</p>
+    <h1 class="hero__title reveal reveal--delay-1">
+      Tu lugar para<br />
+      <span class="gradient-text">eventos innovadores</span>
+    </h1>
+    <p class="hero__subtitle reveal reveal--delay-2">
+      EON · <span class="gradient-text">Play the Future</span>
+    </p>
+    <div class="hero__cta reveal reveal--delay-3">
+      <a class="btn-neon btn-neon--lg" href="/reservas">
+        Reserva ahora
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+    <a class="hero__scroll" href="#marquee" aria-label="Ver más">
+      <span></span>
+    </a>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    min-height: 100vh; /* fallback */
+    display: flex;
+    align-items: center;
+    padding-top: 96px; /* compensa header fijo */
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  /* Fondo placeholder — radial neón sobre negro.
+     Reemplazar por una <img> real con object-fit:cover. */
+  .hero__bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 30%, rgba(37, 212, 242, 0.25), transparent 50%),
+      radial-gradient(ellipse at 80% 70%, rgba(232, 60, 200, 0.28), transparent 55%),
+      radial-gradient(ellipse at 50% 50%, rgba(139, 94, 229, 0.18), transparent 60%),
+      #000;
+    z-index: -2;
+  }
+  /* Grid vector sutil tipo blueprint */
+  .hero__grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+    z-index: -1;
+  }
+
+  .hero__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-5);
+    padding-block: var(--space-8);
+  }
+
+  .hero__title {
+    font-size: var(--fs-hero);
+    line-height: 0.95;
+    max-width: 16ch;
+  }
+
+  .hero__subtitle {
+    font-family: var(--font-display);
+    font-size: var(--fs-lg);
+    font-weight: 500;
+    letter-spacing: var(--ls-wider);
+    text-transform: uppercase;
+    color: var(--c-fg-muted);
+  }
+
+  .hero__cta { margin-top: var(--space-3); }
+
+  /* Indicador de scroll */
+  .hero__scroll {
+    position: absolute;
+    bottom: var(--space-6);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 22px; height: 36px;
+    border: 1.5px solid var(--c-fg-muted);
+    border-radius: var(--radius-pill);
+    display: grid;
+    place-items: start center;
+    padding-top: 6px;
+  }
+  .hero__scroll span {
+    width: 3px; height: 8px;
+    border-radius: 2px;
+    background: var(--c-neon-cyan);
+    animation: scroll-dot 1.8s var(--ease-out) infinite;
+  }
+  @keyframes scroll-dot {
+    0%   { transform: translateY(0);   opacity: 1; }
+    60%  { transform: translateY(12px); opacity: 0; }
+    100% { transform: translateY(0);   opacity: 0; }
+  }
+
+  @media (max-width: 720px) {
+    .hero { padding-top: 88px; }
+    .hero__scroll { display: none; }
+  }
+</style>

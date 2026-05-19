@@ -1,0 +1,125 @@
+---
+/**
+ * Header · fijo, blur, logo + nav + redes + botón RESERVA neón.
+ * En mobile el nav colapsa a un menú hamburguesa controlado por checkbox
+ * (técnica CSS-only, no requiere JS).
+ */
+import Logo from "./Logo.astro";
+import { navLinks } from "../data/nav";
+import { site } from "../data/site";
+---
+
+<header class="site-header" id="top">
+  <div class="container site-header__inner">
+    <Logo size="md" />
+
+    {/* Toggle CSS-only para mobile */}
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-burger" aria-label="Abrir menú">
+      <span></span><span></span><span></span>
+    </label>
+
+    <nav class="site-nav" aria-label="Principal">
+      <ul class="site-nav__list">
+        {navLinks.map((l) => (
+          <li><a class="nav-link" href={l.href}>{l.label}</a></li>
+        ))}
+        <li>
+          <a class="nav-link" href={site.socials.instagram} target="_blank" rel="noopener">
+            Instagram
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" href={site.socials.x} target="_blank" rel="noopener">X</a>
+        </li>
+        <li class="site-nav__cta-mobile">
+          <a class="btn-neon" href="/reservas">Reserva</a>
+        </li>
+      </ul>
+    </nav>
+
+    <a class="btn-neon site-header__cta" href="/reservas">Reserva</a>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: var(--z-header);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.45));
+    border-bottom: 1px solid var(--c-border);
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    min-height: 72px;
+  }
+
+  /* --- Nav desktop --- */
+  .site-nav__list {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    list-style: none;
+  }
+  .site-nav__cta-mobile { display: none; }
+
+  /* --- Toggle / burger (oculto en desktop) --- */
+  .nav-toggle { display: none; }
+  .nav-burger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px; height: 20px;
+    cursor: pointer;
+    z-index: 2;
+  }
+  .nav-burger span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--c-fg);
+    border-radius: 2px;
+    transition: transform var(--dur-base) var(--ease-out),
+                opacity var(--dur-fast) var(--ease-out);
+  }
+
+  /* --- Mobile breakpoint --- */
+  @media (max-width: 960px) {
+    .site-header__cta { display: none; }
+    .nav-burger { display: flex; }
+    .site-nav__cta-mobile { display: block; }
+
+    .site-nav {
+      position: fixed;
+      inset: 72px 0 0 0;
+      background: rgba(0, 0, 0, 0.94);
+      backdrop-filter: blur(16px);
+      transform: translateX(100%);
+      transition: transform var(--dur-base) var(--ease-out);
+      overflow-y: auto;
+    }
+    .site-nav__list {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: var(--space-7) var(--container-pad);
+      gap: var(--space-5);
+    }
+    .nav-link { font-size: var(--fs-lg); }
+
+    .nav-toggle:checked ~ .site-nav { transform: translateX(0); }
+    .nav-toggle:checked ~ .nav-burger span:nth-child(1) {
+      transform: translateY(9px) rotate(45deg);
+    }
+    .nav-toggle:checked ~ .nav-burger span:nth-child(2) { opacity: 0; }
+    .nav-toggle:checked ~ .nav-burger span:nth-child(3) {
+      transform: translateY(-9px) rotate(-45deg);
+    }
+  }
+</style>

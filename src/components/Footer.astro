@@ -1,0 +1,122 @@
+---
+/**
+ * Footer · estilo neon.com — columnas + brand + redes.
+ */
+import Logo from "./Logo.astro";
+import { navLinks } from "../data/nav";
+import { site } from "../data/site";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div class="site-footer__brand">
+      <Logo size="lg" href={null} />
+      <p class="site-footer__tagline">{site.description}</p>
+    </div>
+
+    <div class="site-footer__cols">
+      <div class="site-footer__col">
+        <p class="site-footer__heading">Navegación</p>
+        <ul>
+          {navLinks.map((l) => (
+            <li><a href={l.href}>{l.label}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="site-footer__col">
+        <p class="site-footer__heading">Contacto</p>
+        <ul>
+          <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+          <li><a href={`tel:${site.phone.replace(/\s/g, "")}`}>{site.phone}</a></li>
+          <li>{site.address.street}</li>
+          <li>{site.address.city}</li>
+        </ul>
+      </div>
+
+      <div class="site-footer__col">
+        <p class="site-footer__heading">Redes</p>
+        <ul>
+          <li><a href={site.socials.instagram} target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href={site.socials.x} target="_blank" rel="noopener">X / Twitter</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="site-footer__bottom container">
+    <p>© {year} {site.name}. {site.tagline}.</p>
+    <p>Hecho con ✦ en Buenos Aires</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--c-bg-elev);
+    border-top: 1px solid var(--c-border);
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-5);
+    margin-top: var(--space-9);
+  }
+  .site-footer__inner {
+    display: grid;
+    grid-template-columns: 1.4fr 2fr;
+    gap: var(--space-7);
+    padding-bottom: var(--space-7);
+    border-bottom: 1px solid var(--c-border);
+  }
+  .site-footer__tagline {
+    margin-top: var(--space-4);
+    color: var(--c-fg-muted);
+    max-width: 38ch;
+  }
+  .site-footer__cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+  }
+  .site-footer__heading {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    letter-spacing: var(--ls-wider);
+    text-transform: uppercase;
+    color: var(--c-fg-muted);
+    margin-bottom: var(--space-3);
+  }
+  .site-footer__col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    font-size: var(--fs-sm);
+    color: var(--c-fg);
+  }
+  .site-footer__col a {
+    color: inherit;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+  .site-footer__col a:hover { color: var(--c-neon-cyan); }
+
+  .site-footer__bottom {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-top: var(--space-5);
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    letter-spacing: var(--ls-wide);
+    text-transform: uppercase;
+    color: var(--c-fg-muted);
+  }
+
+  @media (max-width: 860px) {
+    .site-footer__inner { grid-template-columns: 1fr; gap: var(--space-6); }
+    .site-footer__cols { grid-template-columns: repeat(2, 1fr); }
+    .site-footer__bottom { flex-direction: column; }
+  }
+  @media (max-width: 480px) {
+    .site-footer__cols { grid-template-columns: 1fr; }
+  }
+</style>

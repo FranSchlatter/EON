@@ -1,0 +1,93 @@
+---
+/**
+ * Partners · slider auto-scrolling (mismo patrón que el marquee de eventos,
+ * pero más lento y con logos en vez de texto).
+ * Duplicamos la lista para conseguir un loop perfecto.
+ */
+import { partners } from "../data/partners";
+
+const loopItems = [...partners, ...partners];
+---
+
+<section class="partners section" id="partners">
+  <div class="container">
+    <header class="partners__header reveal">
+      <p class="eyebrow">— Partners</p>
+      <h2 class="partners__title">
+        Construido junto a <span class="gradient-text">los mejores</span>.
+      </h2>
+    </header>
+  </div>
+
+  <div class="marquee partners__marquee" aria-label="Partners de EON">
+    <ul class="marquee__track partners__track" role="list">
+      {loopItems.map((p, i) => (
+        <li class="partners__item" aria-hidden={i >= partners.length ? "true" : undefined}>
+          {p.href ? (
+            <a href={p.href} target="_blank" rel="noopener" aria-label={p.name}>
+              <img src={p.logo} alt={p.name} loading="lazy" />
+            </a>
+          ) : (
+            <img src={p.logo} alt={p.name} loading="lazy" />
+          )}
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .partners__header { max-width: 720px; margin-bottom: var(--space-7); }
+  .partners__title { font-size: var(--fs-2xl); }
+
+  /* Override de la velocidad del marquee solo para partners */
+  .partners__marquee {
+    --marquee-gap: var(--space-7);
+  }
+  .partners__marquee .marquee__track {
+    animation-duration: 60s;
+  }
+
+  .partners__track {
+    list-style: none;
+    align-items: center;
+    padding-block: var(--space-5);
+  }
+
+  .partners__item {
+    flex-shrink: 0;
+    width: clamp(140px, 18vw, 220px);
+    height: 88px;
+    display: grid;
+    place-items: center;
+    padding: var(--space-4);
+    background: var(--c-bg-elev);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-md);
+    transition: background var(--dur-base) var(--ease-out),
+                border-color var(--dur-base) var(--ease-out);
+  }
+  .partners__item:hover {
+    background: var(--c-bg-soft);
+    border-color: var(--c-neon-magenta);
+  }
+  .partners__item img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    opacity: 0.7;
+    transition: opacity var(--dur-base) var(--ease-out),
+                filter var(--dur-base);
+    filter: grayscale(1) brightness(1.2);
+  }
+  .partners__item:hover img { opacity: 1; filter: none; }
+
+  @media (max-width: 720px) {
+    .partners__item {
+      width: clamp(120px, 38vw, 180px);
+      height: 72px;
+    }
+    .partners__marquee .marquee__track { animation-duration: 45s; }
+  }
+</style>

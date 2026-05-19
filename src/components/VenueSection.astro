@@ -1,0 +1,55 @@
+---
+/**
+ * VenueSection · header + stack de bloques sticky.
+ *
+ * El header vive dentro de .container (constreñido).
+ * Los bloques son full-bleed (el negro debe cubrir todo el viewport para
+ * que la sensación de "stack" sea continua), con su contenido interno
+ * dentro de un .container.
+ */
+import VenueBlock from "./VenueBlock.astro";
+import { venueBlocks } from "../data/venue";
+---
+
+<section class="venue" id="venue">
+  <div class="container">
+    <header class="venue__header reveal">
+      <p class="eyebrow">— Venue</p>
+      <h2 class="venue__title">
+        Todo lo que necesitás para <span class="gradient-text">jugar, transmitir y celebrar</span>.
+      </h2>
+    </header>
+  </div>
+
+  <div class="venue__stack">
+    {venueBlocks.map((block, i) => (
+      <VenueBlock {...block} flip={i % 2 === 1} />
+    ))}
+  </div>
+</section>
+
+<style>
+  .venue {
+    /* padding controlado abajo, sin padding-block de .section, para que el
+       stack arranque limpio sin gaps que rompan el sticky */
+    padding-top: var(--space-9);
+  }
+  .venue__header {
+    max-width: 760px;
+    margin-bottom: var(--space-8);
+  }
+  .venue__title {
+    font-size: var(--fs-3xl);
+  }
+
+  /* El stack es un block container plano — los bloques sticky viven acá.
+     Sin gap ni flex: que se apilen pegados. */
+  .venue__stack {
+    display: block;
+  }
+
+  @media (max-width: 720px) {
+    .venue { padding-top: var(--space-7); }
+    .venue__header { margin-bottom: var(--space-6); }
+  }
+</style>
