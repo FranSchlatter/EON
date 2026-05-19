@@ -11,15 +11,15 @@
   <div class="hero__grid" aria-hidden="true"></div>
 
   <div class="container hero__inner">
-    <p class="eyebrow reveal">— EON · Gaming Center</p>
-    <h1 class="hero__title reveal reveal--delay-1">
+    <p class="eyebrow hero__anim">— EON · Gaming Center</p>
+    <h1 class="hero__title hero__anim">
       Tu lugar para<br />
       <span class="gradient-text">eventos innovadores</span>
     </h1>
-    <p class="hero__subtitle reveal reveal--delay-2">
+    <p class="hero__subtitle hero__anim">
       EON · <span class="gradient-text">Play the Future</span>
     </p>
-    <div class="hero__cta reveal reveal--delay-3">
+    <div class="hero__cta hero__anim">
       <a class="btn-neon btn-neon--lg" href="/reservas">
         Reserva ahora
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -122,5 +122,36 @@
   @media (max-width: 720px) {
     .hero { padding-top: 88px; }
     .hero__scroll { display: none; }
+  }
+
+  /* --- Entrada coreografiada en page load -------------------- */
+  /* Cada elemento del hero entra con fade-up escalonado, en sync */
+  /* con el fade-out del overlay de intro (que termina en ~1.5s).*/
+  .hero__anim {
+    animation: hero-fade-up 0.7s var(--ease-out) both;
+  }
+  .hero__inner .eyebrow.hero__anim    { animation-delay: 1.15s; }
+  .hero__inner .hero__title           { animation-delay: 1.30s; }
+  .hero__inner .hero__subtitle        { animation-delay: 1.45s; }
+  .hero__inner .hero__cta             { animation-delay: 1.60s; }
+
+  /* Si la intro se saltó (navegación dentro de la sesión), no tiene
+     sentido esperar — animamos al toque con stagger corto. */
+  :global(html.intro-skip) .hero__inner .eyebrow.hero__anim { animation-delay: 0.05s; }
+  :global(html.intro-skip) .hero__inner .hero__title        { animation-delay: 0.15s; }
+  :global(html.intro-skip) .hero__inner .hero__subtitle     { animation-delay: 0.25s; }
+  :global(html.intro-skip) .hero__inner .hero__cta          { animation-delay: 0.35s; }
+
+  @keyframes hero-fade-up {
+    from { opacity: 0; transform: translateY(36px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__anim {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
   }
 </style>

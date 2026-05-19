@@ -40,9 +40,11 @@ const loopItems = [...partners, ...partners];
   .partners__header { max-width: 720px; margin-bottom: var(--space-7); }
   .partners__title { font-size: var(--fs-2xl); }
 
-  /* Override de la velocidad del marquee solo para partners */
+  /* El wrapper toma el padding vertical (no el track), así no se
+     desincroniza el loop del marquee. */
   .partners__marquee {
     --marquee-gap: var(--space-7);
+    padding-block: var(--space-5);
   }
   .partners__marquee .marquee__track {
     animation-duration: 60s;
@@ -50,33 +52,46 @@ const loopItems = [...partners, ...partners];
 
   .partners__track {
     list-style: none;
-    align-items: center;
-    padding-block: var(--space-5);
   }
 
   .partners__item {
     flex-shrink: 0;
-    width: clamp(140px, 18vw, 220px);
-    height: 88px;
+    width: clamp(200px, 24vw, 300px);
+    height: 140px;
     display: grid;
     place-items: center;
-    padding: var(--space-4);
+    padding: var(--space-5);
     background: var(--c-bg-elev);
     border: 1px solid var(--c-border);
     border-radius: var(--radius-md);
     transition: background var(--dur-base) var(--ease-out),
-                border-color var(--dur-base) var(--ease-out);
+                border-color var(--dur-base) var(--ease-out),
+                box-shadow var(--dur-base) var(--ease-out);
   }
   .partners__item:hover {
     background: var(--c-bg-soft);
     border-color: var(--c-neon-magenta);
+    box-shadow: 0 0 24px rgba(232, 60, 200, 0.25);
+  }
+
+  /* Si hay link, el <a> ocupa la celda y centra el logo adentro.
+     Si el logo es <img> directo, ya queda centrado por el
+     `place-items: center` de .partners__item. */
+  .partners__item > a {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
   }
   .partners__item img {
     max-width: 100%;
     max-height: 100%;
     width: auto;
     height: auto;
-    opacity: 0.7;
+    /* Forzar display block descarta el espacio fantasma del
+       baseline alignment que img tiene como inline por default */
+    display: block;
+    opacity: 0.75;
     transition: opacity var(--dur-base) var(--ease-out),
                 filter var(--dur-base);
     filter: grayscale(1) brightness(1.2);
@@ -85,8 +100,8 @@ const loopItems = [...partners, ...partners];
 
   @media (max-width: 720px) {
     .partners__item {
-      width: clamp(120px, 38vw, 180px);
-      height: 72px;
+      width: clamp(160px, 44vw, 220px);
+      height: 110px;
     }
     .partners__marquee .marquee__track { animation-duration: 45s; }
   }

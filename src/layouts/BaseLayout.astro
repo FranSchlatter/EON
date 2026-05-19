@@ -92,10 +92,29 @@ const jsonLd = {
 
     {/* JSON-LD para Google */}
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+    {/* Skip intro si ya se mostró en esta sesión.
+        Inline + síncrono: corre antes del primer paint para que el overlay
+        ni siquiera se vea cuando navegás entre páginas. */}
+    <script is:inline>
+      try {
+        if (sessionStorage.getItem("eon_intro_played")) {
+          document.documentElement.classList.add("intro-skip");
+        } else {
+          sessionStorage.setItem("eon_intro_played", "1");
+        }
+      } catch (e) { /* sessionStorage puede fallar en modos privados */ }
+    </script>
   </head>
 
   <body>
     <CustomCursor />
+
+    {/* Overlay de intro · se autoremueve por CSS (animation-fill-mode forwards) */}
+    <div class="page-intro" aria-hidden="true">
+      <span class="page-intro__brand">EON</span>
+    </div>
+
     <slot />
 
     {/* Scripts deferred — son módulos, no bloquean render */}
@@ -103,3 +122,47 @@ const jsonLd = {
     <script type="module" src="/scripts/scroll-reveal.js"></script>
   </body>
 </html>
+
+<style is:global>
+  /* --- Page intro overlay ----------------------------------- */
+  .page-intro {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: var(--c-bg);
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+    animation: page-intro-out 0.55s var(--ease-out) 0.95s forwards;
+  }
+  .page-intro__brand {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(3.5rem, 14vw, 9rem);
+    background: var(--grad-brand);
+    -webkit-background-clip: text;
+            background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 0.08em;
+    filter: drop-shadow(0 0 24px rgba(232, 60, 200, 0.35));
+    animation: page-intro-brand 1.0s var(--ease-out) both;
+  }
+  @keyframes page-intro-brand {
+    0%   { opacity: 0; letter-spacing: 0.4em;  filter: blur(14px) drop-shadow(0 0 0 transparent); transform: scale(0.85); }
+    55%  { opacity: 1; letter-spacing: 0.1em;  filter: blur(0)    drop-shadow(0 0 32px rgba(232, 60, 200, 0.55)); transform: scale(1); }
+    100% { opacity: 1; letter-spacing: 0.08em; filter: blur(0)    drop-shadow(0 0 24px rgba(232, 60, 200, 0.35)); transform: scale(1); }
+  }
+  @keyframes page-intro-out {
+    0%   { opacity: 1; }
+    100% { opacity: 0; visibility: hidden; }
+  }
+
+  /* Si la intro ya se mostró en esta sesión, no la rendereamos */
+  html.intro-skip .page-intro { display: none !important; }
+
+  /* Reduced motion: sin intro */
+  @media (prefers-reduced-motion: reduce) {
+    .page-intro { display: none !important; }
+  }
+</style>

@@ -102,28 +102,6 @@ const { eyebrow, title, body, image, imageAlt, flip = false } = Astro.props;
     max-width: 50ch;
   }
 
-  /* --- Progressive enhancement -------------------------------
-     En navegadores con scroll-driven animations (Chrome 115+,
-     Edge), el bloque saliente se desvanece y achica sutilmente
-     a medida que el siguiente lo cubre. Sin soporte, queda el
-     sticky stack plano (que ya cumple). */
-  @supports (animation-timeline: view()) {
-    @media (prefers-reduced-motion: no-preference) {
-      .venue-block {
-        animation: venue-exit linear forwards;
-        animation-timeline: view();
-        animation-range: exit 0% exit 90%;
-      }
-      @keyframes venue-exit {
-        to {
-          opacity: 0.35;
-          transform: scale(0.94);
-          filter: blur(2px);
-        }
-      }
-    }
-  }
-
   /* --- Mobile ------------------------------------------------- */
   /* Sticky funciona en mobile igual, pero achicamos el alto y
      compactamos la grilla. */
