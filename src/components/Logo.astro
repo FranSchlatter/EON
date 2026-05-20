@@ -1,7 +1,6 @@
 ---
 /**
- * Logo · wordmark "EON" con gradiente del logo real.
- * Cuando llegue el SVG oficial, reemplazar el contenido por <img src=...>.
+ * Logo · imagen oficial EON (incluye wordmark + "Play the Future").
  */
 interface Props {
   size?: "sm" | "md" | "lg";
@@ -9,12 +8,13 @@ interface Props {
 }
 const { size = "md", href = "#top" } = Astro.props;
 
+// Alto del logo por tamaño (el ancho se calcula solo, ratio ~2.18:1).
 const sizeMap: Record<string, string> = {
-  sm: "1.25rem",
-  md: "1.75rem",
-  lg: "2.5rem",
+  sm: "1.75rem",
+  md: "2.5rem",
+  lg: "3.5rem",
 };
-const fontSize = sizeMap[size];
+const logoHeight = sizeMap[size];
 
 const Wrapper = href ? "a" : "div";
 ---
@@ -22,38 +22,30 @@ const Wrapper = href ? "a" : "div";
 <Wrapper
   class="logo"
   {...(href ? { href, "aria-label": "EON · ir al inicio" } : {})}
-  style={`--logo-size: ${fontSize}`}
+  style={`--logo-height: ${logoHeight}`}
 >
-  <span class="logo__word gradient-text">EON</span>
-  <span class="logo__sub">Play the Future</span>
+  <img
+    src="/images/EON_Logo.png"
+    alt="EON · Play the Future"
+    class="logo__img"
+    width="436"
+    height="200"
+  />
 </Wrapper>
 
 <style>
   .logo {
     display: inline-flex;
-    flex-direction: column;
+    align-items: center;
     line-height: 1;
     text-decoration: none;
     transition: filter var(--dur-base) var(--ease-out);
   }
   .logo:hover { filter: drop-shadow(0 0 12px rgba(232, 60, 200, 0.5)); }
 
-  .logo__word {
-    font-family: var(--font-display);
-    font-weight: 900;
-    font-size: var(--logo-size);
-    letter-spacing: 0.04em;
-  }
-  .logo__sub {
-    font-family: var(--font-mono);
-    font-size: calc(var(--logo-size) * 0.32);
-    letter-spacing: var(--ls-wider);
-    text-transform: uppercase;
-    color: var(--c-fg-muted);
-    margin-top: 2px;
-  }
-
-  @media (max-width: 480px) {
-    .logo__sub { display: none; }
+  .logo__img {
+    height: var(--logo-height);
+    width: auto;
+    display: block;
   }
 </style>
