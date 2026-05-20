@@ -106,13 +106,25 @@ import { site } from "../data/site";
     .nav-burger { display: flex; }
     .site-nav__cta-mobile { display: block; }
 
+    /* En mobile el wrapper deja de generar caja propia: el nav (fixed)
+       y el CTA (hidden) no ocupan espacio, así Logo + burger quedan
+       como únicos flex children y `space-between` los manda a los
+       extremos. */
     .site-header__right {
-      margin-left: 0;
+      display: contents;
     }
 
+    /* El header tiene backdrop-filter, lo que lo convierte en containing
+       block de este panel fixed. Por eso no usamos `bottom: 0` (resolvería
+       contra los 72px del header dando altura 0): fijamos la altura con
+       calc respecto al viewport. */
     .site-nav {
       position: fixed;
-      inset: 72px 0 0 0;
+      top: 72px;
+      left: 0;
+      right: 0;
+      height: calc(100vh - 72px);
+      height: calc(100svh - 72px);
       background: rgba(0, 0, 0, 0.94);
       backdrop-filter: blur(16px);
       transform: translateX(100%);
