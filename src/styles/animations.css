@@ -131,11 +131,11 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  padding: 0.85rem 1.6rem;
+  padding: 0.55rem 1.05rem;
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: var(--fs-sm);
-  letter-spacing: 0.22em;
+  font-size: var(--fs-xs);
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--c-fg);
   background: rgba(232, 60, 200, 0.06);
@@ -191,6 +191,8 @@
 .nav-link {
   position: relative;
   padding-block: var(--space-2);
+  font-family: var(--font-body);
+  font-weight: 600;
   font-size: var(--fs-sm);
   letter-spacing: var(--ls-wide);
   text-transform: uppercase;

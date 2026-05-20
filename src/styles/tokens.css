@@ -38,7 +38,7 @@
   /* --- Tipografía --- */
   /* Display = titulares (geométrica tipo Eurostile). Body = lectura. */
   --font-display: "Orbitron", "Rajdhani", system-ui, sans-serif;
-  --font-body:    "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body:    "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono:    "JetBrains Mono", ui-monospace, "Cascadia Code", monospace;
 
   /* Escala tipográfica fluida (clamp = mobile-first sin breakpoints rotos) */

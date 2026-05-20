@@ -1,11 +1,11 @@
 ---
 /**
- * VenueBlock · bloque imagen + texto con sticky stacking.
+ * VenueBlock · bloque con texto y mini-slider de imágenes.
  *
- * Técnica: cada bloque es `position: sticky; top: 0; min-height: 100vh`.
- * Mientras scroleás, el bloque actual queda pegado al top y el siguiente
- * sube desde abajo y lo cubre. Resultado: la sensación de que el contenido
- * sube en vez de que el usuario baje. CSS puro, sin JS.
+ * Cada bloque mantiene `position: sticky; top: 0` para el stacking scroll
+ * (CSS puro). Dentro de la columna media hay un slider horizontal con
+ * flechas prev/next + dots. Si hay una sola imagen, las flechas y los
+ * dots se ocultan automáticamente.
  *
  * `flip` invierte la columna imagen↔texto en desktop.
  */
@@ -15,22 +15,70 @@ interface Props extends VenueBlockData {
   flip?: boolean;
 }
 
-const { eyebrow, title, body, image, imageAlt, flip = false } = Astro.props;
+const { id, eyebrow, title, body, images, flip = false } = Astro.props;
+const multi = images.length > 1;
 ---
 
 <article class={`venue-block ${flip ? "is-flip" : ""}`}>
   <div class="venue-block__inner container">
-    <div class="venue-block__media">
-      {/* Placeholder gradient mientras no haya foto. Cuando llegue el archivo,
-          el <img> debajo lo cubre automáticamente. */}
+    <div
+      class="venue-block__media venue-slider"
+      data-venue-slider={multi ? "" : null}
+      data-count={images.length}
+    >
       <div class="venue-block__media-placeholder" aria-hidden="true"></div>
-      <img
-        src={image}
-        alt={imageAlt}
-        loading="lazy"
-        decoding="async"
-        onerror="this.style.display='none'"
-      />
+
+      <div class="venue-slider__track" data-track>
+        {images.map((img, i) => (
+          <img
+            class="venue-slider__slide"
+            src={img.src}
+            alt={img.alt}
+            loading={i === 0 ? "eager" : "lazy"}
+            decoding="async"
+            data-active={i === 0 ? "" : null}
+            onerror="this.style.display='none'"
+          />
+        ))}
+      </div>
+
+      {multi && (
+        <>
+          <button
+            type="button"
+            class="venue-slider__nav venue-slider__nav--prev"
+            aria-label="Imagen anterior"
+            data-prev
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="venue-slider__nav venue-slider__nav--next"
+            aria-label="Imagen siguiente"
+            data-next
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+
+          <div class="venue-slider__dots" role="tablist" aria-label={`Imágenes de ${id}`}>
+            {images.map((_, i) => (
+              <button
+                type="button"
+                class="venue-slider__dot"
+                role="tab"
+                aria-label={`Ir a imagen ${i + 1}`}
+                aria-selected={i === 0 ? "true" : "false"}
+                data-dot={i}
+              ></button>
+            ))}
+          </div>
+        </>
+      )}
     </div>
 
     <div class="venue-block__content">
@@ -42,15 +90,11 @@ const { eyebrow, title, body, image, imageAlt, flip = false } = Astro.props;
 </article>
 
 <style>
-  /* --- Sticky stacking ---------------------------------------
-     Cada bloque se "pinea" al top hasta que el siguiente lo
-     desplaza. El bg opaco asegura que cubra al anterior y no
-     se vea a través.                                           */
   .venue-block {
     position: sticky;
     top: 0;
     min-height: 100vh;
-    min-height: 100svh; /* respeta UI mobile del navegador */
+    min-height: 100svh;
     background: var(--c-bg);
     display: flex;
     align-items: center;
@@ -68,7 +112,7 @@ const { eyebrow, title, body, image, imageAlt, flip = false } = Astro.props;
   .venue-block.is-flip .venue-block__media   { order: 2; }
   .venue-block.is-flip .venue-block__content { order: 1; }
 
-  /* --- Media ------------------------------------------------- */
+  /* --- Media / slider --------------------------------------- */
   .venue-block__media {
     position: relative;
     aspect-ratio: 4 / 3;
@@ -78,11 +122,6 @@ const { eyebrow, title, body, image, imageAlt, flip = false } = Astro.props;
     background: var(--c-bg-elev);
     box-shadow: var(--glow-brand);
   }
-  .venue-block__media img {
-    position: absolute; inset: 0;
-    width: 100%; height: 100%;
-    object-fit: cover;
-  }
   .venue-block__media-placeholder {
     position: absolute; inset: 0;
     background:
@@ -91,20 +130,85 @@ const { eyebrow, title, body, image, imageAlt, flip = false } = Astro.props;
       var(--c-bg-soft);
   }
 
+  .venue-slider__track {
+    position: absolute; inset: 0;
+  }
+  .venue-slider__slide {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity var(--dur-base) var(--ease-out);
+  }
+  .venue-slider__slide[data-active] { opacity: 1; }
+
+  /* Flechas */
+  .venue-slider__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px; height: 40px;
+    display: grid;
+    place-items: center;
+    color: var(--c-fg);
+    background: rgba(0, 0, 0, 0.45);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-pill);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition:
+      background var(--dur-fast) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out),
+      transform var(--dur-fast) var(--ease-out);
+  }
+  .venue-slider__nav:hover {
+    background: rgba(232, 60, 200, 0.25);
+    box-shadow: 0 0 16px rgba(232, 60, 200, 0.45);
+  }
+  .venue-slider__nav:active { transform: translateY(-50%) scale(0.95); }
+  .venue-slider__nav--prev { left: var(--space-3); }
+  .venue-slider__nav--next { right: var(--space-3); }
+
+  /* Dots */
+  .venue-slider__dots {
+    position: absolute;
+    left: 50%;
+    bottom: var(--space-3);
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    padding: 6px 10px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: var(--radius-pill);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  .venue-slider__dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.35);
+    transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast);
+  }
+  .venue-slider__dot[aria-selected="true"] {
+    background: var(--c-neon-magenta);
+    transform: scale(1.25);
+    box-shadow: 0 0 8px var(--c-neon-magenta);
+  }
+
   /* --- Content ----------------------------------------------- */
   .venue-block__title {
     font-size: var(--fs-2xl);
     margin-block: var(--space-2) var(--space-4);
   }
   .venue-block__body {
+    font-family: var(--font-body);
+    font-weight: 500;
     font-size: var(--fs-base);
     color: var(--c-fg-muted);
     max-width: 50ch;
   }
 
   /* --- Mobile ------------------------------------------------- */
-  /* Sticky funciona en mobile igual, pero achicamos el alto y
-     compactamos la grilla. */
   @media (max-width: 860px) {
     .venue-block { padding-block: var(--space-6); }
     .venue-block__inner,
@@ -114,5 +218,40 @@ const { eyebrow, title, body, image, imageAlt, flip = false } = Astro.props;
     }
     .venue-block.is-flip .venue-block__media   { order: 1; }
     .venue-block.is-flip .venue-block__content { order: 2; }
+    .venue-slider__nav { width: 36px; height: 36px; }
   }
 </style>
+
+<script>
+  /* Slider mínimo · sin libs.
+     Funciona por bloque: cada .venue-slider con [data-venue-slider] gestiona
+     su propio estado. Slides se alternan por atributo [data-active] (no por
+     transform), así la animación es un fade con CSS y no rompe lazy-loading. */
+  document.querySelectorAll<HTMLElement>("[data-venue-slider]").forEach((slider) => {
+    const slides = Array.from(
+      slider.querySelectorAll<HTMLImageElement>(".venue-slider__slide")
+    );
+    const dots = Array.from(
+      slider.querySelectorAll<HTMLButtonElement>("[data-dot]")
+    );
+    const prev = slider.querySelector<HTMLButtonElement>("[data-prev]");
+    const next = slider.querySelector<HTMLButtonElement>("[data-next]");
+    if (slides.length < 2) return;
+
+    let index = 0;
+    const go = (i: number) => {
+      index = (i + slides.length) % slides.length;
+      slides.forEach((s, k) => {
+        if (k === index) s.setAttribute("data-active", "");
+        else s.removeAttribute("data-active");
+      });
+      dots.forEach((d, k) =>
+        d.setAttribute("aria-selected", k === index ? "true" : "false")
+      );
+    };
+
+    prev?.addEventListener("click", () => go(index - 1));
+    next?.addEventListener("click", () => go(index + 1));
+    dots.forEach((d, k) => d.addEventListener("click", () => go(k)));
+  });
+</script>

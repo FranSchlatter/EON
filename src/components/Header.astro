@@ -1,8 +1,8 @@
 ---
 /**
- * Header · fijo, blur, logo + nav + redes + botón RESERVA neón.
- * En mobile el nav colapsa a un menú hamburguesa controlado por checkbox
- * (técnica CSS-only, no requiere JS).
+ * Header · fijo, blur. Layout: logo a la izquierda, todo lo demás
+ * (nav + redes + CTA reserva) agrupado a la derecha.
+ * En mobile el nav colapsa a un menú hamburguesa controlado por checkbox.
  */
 import Logo from "./Logo.astro";
 import { navLinks } from "../data/nav";
@@ -11,7 +11,7 @@ import { site } from "../data/site";
 
 <header class="site-header" id="top">
   <div class="container site-header__inner">
-    <Logo size="md" />
+    <Logo size="md" href="/" />
 
     {/* Toggle CSS-only para mobile */}
     <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true" />
@@ -19,26 +19,28 @@ import { site } from "../data/site";
       <span></span><span></span><span></span>
     </label>
 
-    <nav class="site-nav" aria-label="Principal">
-      <ul class="site-nav__list">
-        {navLinks.map((l) => (
-          <li><a class="nav-link" href={l.href}>{l.label}</a></li>
-        ))}
-        <li>
-          <a class="nav-link" href={site.socials.instagram} target="_blank" rel="noopener">
-            Instagram
-          </a>
-        </li>
-        <li>
-          <a class="nav-link" href={site.socials.x} target="_blank" rel="noopener">X</a>
-        </li>
-        <li class="site-nav__cta-mobile">
-          <a class="btn-reserva" href="/reservas">Reserva</a>
-        </li>
-      </ul>
-    </nav>
+    <div class="site-header__right">
+      <nav class="site-nav" aria-label="Principal">
+        <ul class="site-nav__list">
+          {navLinks.map((l) => (
+            <li><a class="nav-link" href={l.href}>{l.label}</a></li>
+          ))}
+          <li>
+            <a class="nav-link" href={site.socials.instagram} target="_blank" rel="noopener">
+              Instagram
+            </a>
+          </li>
+          <li>
+            <a class="nav-link" href={site.socials.x} target="_blank" rel="noopener">X</a>
+          </li>
+          <li class="site-nav__cta-mobile">
+            <a class="btn-reserva" href="/reservas">Reserva</a>
+          </li>
+        </ul>
+      </nav>
 
-    <a class="btn-reserva site-header__cta" href="/reservas">Reserva</a>
+      <a class="btn-reserva site-header__cta" href="/reservas">Reserva</a>
+    </div>
   </div>
 </header>
 
@@ -61,11 +63,19 @@ import { site } from "../data/site";
     min-height: 72px;
   }
 
+  /* Grupo derecha: nav + CTA pegados */
+  .site-header__right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    margin-left: auto;
+  }
+
   /* --- Nav desktop --- */
   .site-nav__list {
     display: flex;
     align-items: center;
-    gap: var(--space-6);
+    gap: var(--space-5);
     list-style: none;
   }
   .site-nav__cta-mobile { display: none; }
@@ -96,6 +106,10 @@ import { site } from "../data/site";
     .nav-burger { display: flex; }
     .site-nav__cta-mobile { display: block; }
 
+    .site-header__right {
+      margin-left: 0;
+    }
+
     .site-nav {
       position: fixed;
       inset: 72px 0 0 0;
@@ -113,7 +127,7 @@ import { site } from "../data/site";
     }
     .nav-link { font-size: var(--fs-lg); }
 
-    .nav-toggle:checked ~ .site-nav { transform: translateX(0); }
+    .nav-toggle:checked ~ .site-header__right .site-nav { transform: translateX(0); }
     .nav-toggle:checked ~ .nav-burger span:nth-child(1) {
       transform: translateY(9px) rotate(45deg);
     }

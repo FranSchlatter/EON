@@ -46,14 +46,19 @@
     isolation: isolate;
   }
 
-  /* Fondo placeholder — radial neón sobre negro.
-     Reemplazar por una <img> real con object-fit:cover. */
+  /* Fondo: foto del venue de noche con overlay neón para legibilidad del title. */
   .hero__bg {
     position: absolute; inset: 0;
     background:
-      radial-gradient(ellipse at 20% 30%, rgba(37, 212, 242, 0.25), transparent 50%),
-      radial-gradient(ellipse at 80% 70%, rgba(232, 60, 200, 0.28), transparent 55%),
-      radial-gradient(ellipse at 50% 50%, rgba(139, 94, 229, 0.18), transparent 60%),
+      linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.55) 0%,
+        rgba(0, 0, 0, 0.35) 40%,
+        rgba(0, 0, 0, 0.75) 100%
+      ),
+      radial-gradient(ellipse at 20% 30%, rgba(37, 212, 242, 0.18), transparent 50%),
+      radial-gradient(ellipse at 80% 70%, rgba(232, 60, 200, 0.22), transparent 55%),
+      url("/images/EON_Denoche.png") center/cover no-repeat,
       #000;
     z-index: -2;
   }

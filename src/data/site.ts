@@ -6,25 +6,24 @@ export const site = {
   name: "EON",
   tagline: "Play the Future",
   description:
-    "EON · Gaming center premium en Buenos Aires. Zona gaming de élite, arena tier 1, simuladores profesionales, cabina de streaming, gastronomía y cocktails. Eventos corporativos, cumpleaños y comunidades gaming.",
+    "La casa del gaming y los esports en Asunción, Paraguay. Vive la experiencia definitiva con nuestra arena competitiva Tier 1, estaciones gamer, simuladores profesionales MOZA, cabinas de streaming y producción, acompañados de una exclusiva barra con la mejor gastronomía y coctelería. El siguiente nivel te espera.",
   url: "https://eon.play",
   email: "reservas@eon.play",
-  phone: "+54 11 0000-0000",
+  phone: "+595 0000 0000",
   address: {
-    street: "Av. Placeholder 1234",
-    city: "Ciudad Autónoma de Buenos Aires",
-    country: "Argentina",
-    // Lat/lng para JSON-LD (reemplazar con coords reales)
-    lat: -34.6037,
-    lng: -58.3816,
-    // Embed src del iframe de Google Maps (reemplazar)
+    street: "Esq. Itapúa y Tte. Primero Nemesio Quiñónez",
+    city: "Asunción",
+    country: "Paraguay",
+    lat: -25.261252,
+    lng: -57.577279,
     mapsEmbed:
-      "https://www.google.com/maps?q=Buenos+Aires+Argentina&z=14&output=embed",
-    mapsLink: "https://www.google.com/maps?q=Buenos+Aires+Argentina",
+      "https://www.google.com/maps?q=-25.261252,-57.577279&z=17&output=embed",
+    mapsLink:
+      "https://www.google.com/maps/place/EON+-+PLAY+THE+FUTURE/@-25.261252,-57.577279,17z",
   },
   socials: {
     instagram: "https://www.instagram.com/eon.play/",
-    x: "https://x.com/eon_play",
+    x: "https://x.com/eonplay_",
   },
   // 1200x630 — placeholder SVG. Reemplazar por JPG/PNG real
   // (FB/IG no renderiza SVG en preview).

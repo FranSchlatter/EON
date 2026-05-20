@@ -8,7 +8,7 @@
  *
  * El bloque ya está marcado con `.reveal` para el scroll reveal.
  */
-const hasVideo = false; // toggle cuando llegue el archivo
+const hasVideo = true;
 ---
 
 <section class="venue-video section" aria-label="Tour del venue">
@@ -17,14 +17,12 @@ const hasVideo = false; // toggle cuando llegue el archivo
       {hasVideo ? (
         <video
           class="venue-video__el"
-          src="/videos/venue.mp4"
-          poster="/images/venue-poster.jpg"
+          src="/videos/EON_VideoBase.mp4"
           preload="metadata"
           playsinline
           muted
           loop
           autoplay
-          controls
         ></video>
       ) : (
         <div class="venue-video__placeholder">

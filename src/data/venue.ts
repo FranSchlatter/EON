@@ -1,7 +1,7 @@
 /**
  * Contenido de los 5 bloques de la sección Venue.
- * Textos exactos del briefing.
- * Reemplazar `image` por la foto definitiva cuando llegue.
+ * Cada bloque ahora soporta múltiples imágenes — slider con flechas dentro
+ * del bloque. Para sumar más fotos por área basta con agregar paths al array.
  */
 export type VenueBlock = {
   id: string;
@@ -9,8 +9,7 @@ export type VenueBlock = {
   title: string;
   subtitle: string;
   body: string;
-  image: string;
-  imageAlt: string;
+  images: { src: string; alt: string }[];
 };
 
 export const venueBlocks: VenueBlock[] = [
@@ -21,8 +20,12 @@ export const venueBlocks: VenueBlock[] = [
     subtitle: "20 estaciones de élite",
     body:
       "20 estaciones de élite equipadas con lo último en hardware. El espacio ideal para quienes buscan el máximo rendimiento y una ventaja competitiva real en cada clic.",
-    image: "/images/venue/zona-gaming.jpg",
-    imageAlt: "Zona Gaming en EON — estaciones gaming de alto rendimiento",
+    images: [
+      { src: "/images/EON_Setups.png", alt: "Zona Gaming en EON — setup 1" },
+      { src: "/images/EON_Setups.png", alt: "Zona Gaming en EON — setup 2" },
+      { src: "/images/EON_Setups.png", alt: "Zona Gaming en EON — setup 3" },
+      { src: "/images/EON_Setups.png", alt: "Zona Gaming en EON — setup 4" },
+    ],
   },
   {
     id: "gastronomia",
@@ -31,8 +34,12 @@ export const venueBlocks: VenueBlock[] = [
     subtitle: "Cocina y mixología de autor",
     body:
       "Recargá energías con una propuesta gourmet y mixología de autor diseñada para acompañar tus sesiones de juego más exigentes.",
-    image: "/images/venue/gastronomia.jpg",
-    imageAlt: "Gastronomía & Cocktails de EON — cocktail neón sobre barra",
+    images: [
+      { src: "/images/EON_Barra.png", alt: "Gastronomía & Cocktails de EON — barra 1" },
+      { src: "/images/EON_Barra.png", alt: "Gastronomía & Cocktails de EON — barra 2" },
+      { src: "/images/EON_Barra.png", alt: "Gastronomía & Cocktails de EON — barra 3" },
+      { src: "/images/EON_Barra.png", alt: "Gastronomía & Cocktails de EON — barra 4" },
+    ],
   },
   {
     id: "arena",
@@ -41,8 +48,12 @@ export const venueBlocks: VenueBlock[] = [
     subtitle: "Stage 5v5, 100 espectadores",
     body:
       "Sentí la presión del directo en nuestro stage 5v5. Un escenario profesional con capacidad para 100 espectadores, diseñado para convertir cada partida en un evento inolvidable.",
-    image: "/images/venue/arena.jpg",
-    imageAlt: "Arena Tier 1 de EON — escenario competitivo 5v5",
+    images: [
+      { src: "/images/EON_Arena.png", alt: "Arena Tier 1 de EON — arena 1" },
+      { src: "/images/EON_Arena.png", alt: "Arena Tier 1 de EON — arena 2" },
+      { src: "/images/EON_Arena.png", alt: "Arena Tier 1 de EON — arena 3" },
+      { src: "/images/EON_Arena.png", alt: "Arena Tier 1 de EON — arena 4" },
+    ],
   },
   {
     id: "simuladores",
@@ -51,8 +62,12 @@ export const venueBlocks: VenueBlock[] = [
     subtitle: "Simuladores de alta gama",
     body:
       "Sentí la adrenalina en cada curva con tecnología de simulación de alta gama. El realismo del asfalto llevado al siguiente nivel.",
-    image: "/images/venue/simuladores.jpg",
-    imageAlt: "Simuladores Profesionales en EON — cabina de simulación racing",
+    images: [
+      { src: "/images/EON_Simuladores.png", alt: "Simuladores Profesionales en EON — simulador 1" },
+      { src: "/images/EON_Simuladores.png", alt: "Simuladores Profesionales en EON — simulador 2" },
+      { src: "/images/EON_Simuladores.png", alt: "Simuladores Profesionales en EON — simulador 3" },
+      { src: "/images/EON_Simuladores.png", alt: "Simuladores Profesionales en EON — simulador 4" },
+    ],
   },
   {
     id: "streaming",
@@ -61,8 +76,12 @@ export const venueBlocks: VenueBlock[] = [
     subtitle: "Broadcasting profesional",
     body:
       "Espacios privados y totalmente equipados con tecnología de broadcasting profesional. Llevá tu contenido a un nivel superior.",
-    image: "/images/venue/streaming.jpg",
-    imageAlt: "Cabina de Streaming de EON — estudio privado equipado",
+    images: [
+      { src: "/images/EON_Streaming.png", alt: "Cabina de Streaming de EON — cabina 1" },
+      { src: "/images/EON_Streaming.png", alt: "Cabina de Streaming de EON — cabina 2" },
+      { src: "/images/EON_Streaming.png", alt: "Cabina de Streaming de EON — cabina 3" },
+      { src: "/images/EON_Streaming.png", alt: "Cabina de Streaming de EON — cabina 4" },
+    ],
   },
 ];
 

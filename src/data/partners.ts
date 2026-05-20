@@ -9,10 +9,6 @@ export type Partner = {
 };
 
 export const partners: Partner[] = [
-  { name: "Partner 01", logo: "/images/partners/placeholder.svg" },
-  { name: "Partner 02", logo: "/images/partners/placeholder.svg" },
-  { name: "Partner 03", logo: "/images/partners/placeholder.svg" },
-  { name: "Partner 04", logo: "/images/partners/placeholder.svg" },
-  { name: "Partner 05", logo: "/images/partners/placeholder.svg" },
-  { name: "Partner 06", logo: "/images/partners/placeholder.svg" },
+  { name: "Meta Esports", logo: "/images/partners/EON_MetaEsports.png" },
+  { name: "Toyo Esports", logo: "/images/partners/EON_ToyoEsports.png" },
 ];
