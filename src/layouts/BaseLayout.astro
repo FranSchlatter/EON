@@ -104,6 +104,24 @@ const jsonLd = {
         }
       } catch (e) { /* sessionStorage puede fallar en modos privados */ }
     </script>
+
+    {/* Progressive enhancement de las animaciones reveal.
+        · Marca .js en <html> antes del primer paint: el estado oculto
+          (opacity:0) de los .reveal/.reveal-x SOLO aplica con JS, así que
+          sin JS el texto se ve igual.
+        · Red de seguridad: si scroll-reveal.js no llegó a correr (no cargó,
+          404, error…), a los 2s mostramos todo para no dejar texto invisible. */}
+    <script is:inline>
+      document.documentElement.classList.add("js");
+      window.addEventListener("load", function () {
+        setTimeout(function () {
+          if (window.__revealReady) return;
+          document
+            .querySelectorAll(".reveal, .reveal-x")
+            .forEach(function (el) { el.classList.add("is-visible"); });
+        }, 2000);
+      });
+    </script>
   </head>
 
   <body>

@@ -29,7 +29,9 @@
 .marquee:hover .marquee__track { animation-play-state: paused; }
 
 /* --- Scroll reveal ----------------------------------------- */
-.reveal {
+/* El estado oculto solo aplica con JS (.js en <html>): si el JS no corre,
+   el texto se ve igual y nunca queda invisible. */
+.js .reveal {
   opacity: 0;
   transform: translateY(28px);
   transition:
@@ -49,7 +51,7 @@
 /* Cada renglón entra deslizándose desde un lado al hacer scroll. */
 /* La dirección se alterna con .from-left / .from-right y el     */
 /* stagger se controla con --reveal-delay por elemento.          */
-.reveal-x {
+.js .reveal-x {
   opacity: 0;
   transition:
     opacity var(--dur-slow) var(--ease-out),
@@ -57,8 +59,8 @@
   transition-delay: var(--reveal-delay, 0ms);
   will-change: opacity, transform;
 }
-.reveal-x.from-left  { transform: translateX(-56px); }
-.reveal-x.from-right { transform: translateX(56px); }
+.js .reveal-x.from-left  { transform: translateX(-56px); }
+.js .reveal-x.from-right { transform: translateX(56px); }
 .reveal-x.is-visible { opacity: 1; transform: translateX(0); }
 
 /* --- Scroll stage (appear + disappear) ---------------------- */

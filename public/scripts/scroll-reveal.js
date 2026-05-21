@@ -11,6 +11,10 @@
  * Honra prefers-reduced-motion (todo arranca visible).
  */
 (() => {
+  // Avisa a la red de seguridad de BaseLayout que el reveal sí está corriendo,
+  // así no fuerza la aparición de todo a los 2s.
+  window.__revealReady = true;
+
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const supportsIO = typeof IntersectionObserver !== "undefined";
 
