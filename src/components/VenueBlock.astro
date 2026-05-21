@@ -100,6 +100,36 @@ const multi = images.length > 1;
     align-items: center;
     padding-block: var(--space-7);
   }
+  /* Canto superior luminoso: como todos los bloques son negros, sin este
+     borde el "stack" sticky se ve estático. La línea neón marca el borde
+     que sube sobre el bloque anterior → la transición se lee fluida.
+     El degradado vertical suaviza el corte para que no sea un escalón duro. */
+  .venue-block::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--c-neon-cyan) 25%,
+      var(--c-neon-magenta) 75%,
+      transparent 100%
+    );
+    opacity: 0.55;
+  }
+  .venue-block::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 96px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.045), transparent);
+    pointer-events: none;
+  }
 
   .venue-block__inner {
     display: grid;

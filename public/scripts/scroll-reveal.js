@@ -14,8 +14,8 @@
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const supportsIO = typeof IntersectionObserver !== "undefined";
 
-  // --- .reveal (una sola vez) ---
-  const reveals = document.querySelectorAll(".reveal");
+  // --- .reveal / .reveal-x (una sola vez) ---
+  const reveals = document.querySelectorAll(".reveal, .reveal-x");
   if (reveals.length) {
     if (reduced || !supportsIO) {
       reveals.forEach((el) => el.classList.add("is-visible"));

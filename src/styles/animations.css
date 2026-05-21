@@ -45,6 +45,22 @@
 .reveal--delay-2 { transition-delay: 160ms; }
 .reveal--delay-3 { transition-delay: 240ms; }
 
+/* --- Reveal horizontal por renglón ------------------------- */
+/* Cada renglón entra deslizándose desde un lado al hacer scroll. */
+/* La dirección se alterna con .from-left / .from-right y el     */
+/* stagger se controla con --reveal-delay por elemento.          */
+.reveal-x {
+  opacity: 0;
+  transition:
+    opacity var(--dur-slow) var(--ease-out),
+    transform var(--dur-slow) var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.reveal-x.from-left  { transform: translateX(-56px); }
+.reveal-x.from-right { transform: translateX(56px); }
+.reveal-x.is-visible { opacity: 1; transform: translateX(0); }
+
 /* --- Scroll stage (appear + disappear) ---------------------- */
 /* Cada bloque entra al viewport, se queda activo, y al salir   */
 /* hacia arriba se va con la misma curva. Coreografía controla- */

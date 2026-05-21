@@ -13,10 +13,12 @@ import { venueBlocks } from "../data/venue";
 
 <section class="venue" id="venue">
   <div class="container">
-    <header class="venue__header reveal">
-      <p class="eyebrow">— Venue</p>
+    <header class="venue__header">
+      <p class="eyebrow reveal">— Venue</p>
       <h2 class="venue__title">
-        Todo lo que necesitás para <span class="gradient-text">jugar, transmitir y celebrar</span>.
+        <span class="venue__line reveal-x from-left" style="--reveal-delay: 60ms">Todo lo que necesitás para</span>
+        <span class="venue__line reveal-x from-right venue__grad-1" style="--reveal-delay: 200ms">jugar, transmitir</span>
+        <span class="venue__line reveal-x from-left venue__grad-2" style="--reveal-delay: 340ms">y celebrar.</span>
       </h2>
     </header>
   </div>
@@ -40,6 +42,26 @@ import { venueBlocks } from "../data/venue";
   }
   .venue__title {
     font-size: var(--fs-3xl);
+  }
+  /* Cada renglón es un bloque propio para que el reveal-x entre línea a línea */
+  .venue__line {
+    display: block;
+  }
+  /* Gradiente continuo "jugar → celebrar" repartido entre los dos renglones:
+     el primero va cyan→violeta y el segundo retoma violeta→magenta, así leído
+     de corrido es un único gradiente que recorre toda la frase. */
+  .venue__grad-1,
+  .venue__grad-2 {
+    -webkit-background-clip: text;
+            background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+  .venue__grad-1 {
+    background-image: linear-gradient(90deg, var(--c-neon-cyan), var(--c-neon-violet));
+  }
+  .venue__grad-2 {
+    background-image: linear-gradient(90deg, var(--c-neon-violet), var(--c-neon-magenta));
   }
 
   /* El stack es un block container plano — los bloques sticky viven acá.

@@ -112,7 +112,14 @@ const jsonLd = {
 
     {/* Overlay de intro · se autoremueve por CSS (animation-fill-mode forwards) */}
     <div class="page-intro" aria-hidden="true">
-      <span class="page-intro__brand">EON</span>
+      <img
+        class="page-intro__logo"
+        src="/images/EON_Logo.png"
+        alt="EON · Play the Future"
+        width="436"
+        height="200"
+        fetchpriority="high"
+      />
     </div>
 
     <slot />
@@ -133,25 +140,33 @@ const jsonLd = {
     display: grid;
     place-items: center;
     pointer-events: none;
-    animation: page-intro-out 0.55s var(--ease-out) 0.95s forwards;
+    animation: page-intro-out 0.6s var(--ease-out) 1.25s forwards;
   }
-  .page-intro__brand {
-    font-family: var(--font-display);
-    font-weight: 900;
-    font-size: clamp(3.5rem, 14vw, 9rem);
-    background: var(--grad-brand);
-    -webkit-background-clip: text;
-            background-clip: text;
-    color: transparent;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: 0.08em;
+  /* Halo radial de fondo: aparece y respira detrás del logo */
+  .page-intro::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(139, 94, 229, 0.22), transparent 58%);
+    animation: page-intro-glow 1.5s var(--ease-out) both;
+  }
+  .page-intro__logo {
+    position: relative;
+    z-index: 1;
+    width: clamp(220px, 40vw, 460px);
+    height: auto;
     filter: drop-shadow(0 0 24px rgba(232, 60, 200, 0.35));
-    animation: page-intro-brand 1.0s var(--ease-out) both;
+    animation: page-intro-logo 1.1s var(--ease-out) both;
   }
-  @keyframes page-intro-brand {
-    0%   { opacity: 0; letter-spacing: 0.4em;  filter: blur(14px) drop-shadow(0 0 0 transparent); transform: scale(0.85); }
-    55%  { opacity: 1; letter-spacing: 0.1em;  filter: blur(0)    drop-shadow(0 0 32px rgba(232, 60, 200, 0.55)); transform: scale(1); }
-    100% { opacity: 1; letter-spacing: 0.08em; filter: blur(0)    drop-shadow(0 0 24px rgba(232, 60, 200, 0.35)); transform: scale(1); }
+  @keyframes page-intro-logo {
+    0%   { opacity: 0; transform: scale(0.82); filter: blur(16px) drop-shadow(0 0 0 transparent); }
+    55%  { opacity: 1; transform: scale(1);    filter: blur(0)    drop-shadow(0 0 38px rgba(232, 60, 200, 0.6)); }
+    100% { opacity: 1; transform: scale(1);    filter: blur(0)    drop-shadow(0 0 24px rgba(232, 60, 200, 0.35)); }
+  }
+  @keyframes page-intro-glow {
+    0%   { opacity: 0; transform: scale(0.6); }
+    60%  { opacity: 1; transform: scale(1); }
+    100% { opacity: 0.7; transform: scale(1.02); }
   }
   @keyframes page-intro-out {
     0%   { opacity: 1; }

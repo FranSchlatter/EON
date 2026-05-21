@@ -48,7 +48,7 @@ const year = new Date().getFullYear();
 
   <div class="site-footer__bottom container">
     <p>© {year} {site.name}. {site.tagline}.</p>
-    <p>Hecho con ✦ en Buenos Aires</p>
+    <p class="site-footer__credit">Hecho por <span class="site-footer__maker">Innovatech</span></p>
   </div>
 </footer>
 
@@ -116,6 +116,16 @@ const year = new Date().getFullYear();
     letter-spacing: var(--ls-wide);
     text-transform: uppercase;
     color: var(--c-fg-muted);
+  }
+
+  .site-footer__credit { display: inline-flex; align-items: center; gap: 0.4em; }
+  .site-footer__maker {
+    background: var(--grad-brand);
+    -webkit-background-clip: text;
+            background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
   }
 
   @media (max-width: 860px) {

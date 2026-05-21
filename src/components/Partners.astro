@@ -47,9 +47,10 @@ const loopItems = [...baseLoop, ...baseLoop];
   .partners__title { font-size: var(--fs-2xl); }
 
   /* El wrapper toma el padding vertical (no el track), así no se
-     desincroniza el loop del marquee. */
+     desincroniza el loop del marquee.
+     gap: 0 → los recuadros quedan pegados (sin separación). */
   .partners__marquee {
-    --marquee-gap: var(--space-8);
+    --marquee-gap: 0px;
     padding-block: var(--space-5);
   }
   .partners__marquee .marquee__track {
@@ -60,11 +61,22 @@ const loopItems = [...baseLoop, ...baseLoop];
     list-style: none;
   }
 
+  /* Cada logo va dentro de su recuadro: solo borde, sin relleno.
+     margin-left: -1px colapsa el borde con el del recuadro anterior,
+     así comparten una única línea fina (sin separación ni doble grosor). */
   .partners__item {
     flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 1px solid var(--c-border);
+    background: transparent;
+    padding: var(--space-4) var(--space-6);
+    margin-left: -1px;
+    transition: border-color var(--dur-base) var(--ease-out);
+  }
+  .partners__item:hover {
+    border-color: var(--c-neon-cyan);
   }
   .partners__item > a {
     display: flex;
@@ -84,6 +96,7 @@ const loopItems = [...baseLoop, ...baseLoop];
 
   @media (max-width: 720px) {
     .partners__item img { height: 100px; }
+    .partners__item { padding: var(--space-3) var(--space-5); }
     .partners__marquee .marquee__track { animation-duration: 35s; }
   }
 </style>
