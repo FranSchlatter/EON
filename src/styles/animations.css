@@ -61,7 +61,9 @@
 }
 .js .reveal-x.from-left  { transform: translateX(-56px); }
 .js .reveal-x.from-right { transform: translateX(56px); }
-.reveal-x.is-visible { opacity: 1; transform: translateX(0); }
+/* Misma especificidad que .from-left/.from-right (y va después en el archivo)
+   para que, al activarse, gane y devuelva el renglón a su posición. */
+.js .reveal-x.is-visible { opacity: 1; transform: translateX(0); }
 
 /* --- Scroll stage (appear + disappear) ---------------------- */
 /* Cada bloque entra al viewport, se queda activo, y al salir   */
