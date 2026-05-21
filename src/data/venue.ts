@@ -85,6 +85,29 @@ export const venueBlocks: VenueBlock[] = [
   },
 ];
 
+/**
+ * Sección "Otros servicios" — EON Mobile.
+ * Bloque único (texto + slider) que va entre Venue y Partners.
+ */
+export const otherServices = {
+  eyebrow: "— Otros servicios",
+  title: "EON Mobile",
+  subtitle: "La potencia EON, en tu domicilio o evento.",
+  body:
+    "Alquilá hardware de élite con instalación profesional incluida. Nos encargamos del setup completo para que tu evento sea, simplemente, legendario.",
+  features: [
+    "Traslado inmediato",
+    "Montaje y puesta a punto",
+    "Asistencia técnica constante",
+  ],
+  cta: { label: "Consultar", href: "/reservas" },
+  images: [
+    { src: "/images/EON_OtrosServicios_1.JPG", alt: "EON Mobile — hardware de élite a domicilio 1" },
+    { src: "/images/EON_OtrosServicios_2.JPG", alt: "EON Mobile — montaje profesional en evento 2" },
+    { src: "/images/EON_OtrosServicios_3.JPG", alt: "EON Mobile — setup completo instalado 3" },
+  ],
+} as const;
+
 /** Items del marquee horizontal */
 export const marqueeItems = [
   "eventos de empresa",

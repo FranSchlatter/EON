@@ -1,0 +1,298 @@
+---
+/**
+ * OtherServices · "Otros servicios" — EON Mobile.
+ *
+ * Bloque único entre Venue y Partners: texto a la izquierda (título, copy,
+ * features con check y CTA al formulario) y slider de imágenes a la derecha.
+ *
+ * Trae su propio slider con script scoped (data-os-slider) para no depender
+ * ni colisionar con el slider de VenueBlock.
+ */
+import { otherServices } from "../data/venue";
+
+const { eyebrow, title, subtitle, body, features, cta, images } = otherServices;
+const multi = images.length > 1;
+---
+
+<section class="other section" id="otros-servicios">
+  <div class="container other__inner">
+    <div class="other__content reveal">
+      <p class="eyebrow">{eyebrow}</p>
+      <h2 class="other__title gradient-text">{title}</h2>
+      <p class="other__subtitle">{subtitle}</p>
+      <p class="other__body">{body}</p>
+
+      <ul class="other__features">
+        {features.map((f) => (
+          <li class="other__feature">
+            <span class="other__check" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+            {f}
+          </li>
+        ))}
+      </ul>
+
+      <a class="btn-neon btn-neon--lg other__cta" href={cta.href}>{cta.label}</a>
+    </div>
+
+    <div
+      class="other__media os-slider reveal reveal--delay-1"
+      data-os-slider={multi ? "" : null}
+    >
+      <div class="other__media-placeholder" aria-hidden="true"></div>
+
+      <div class="os-slider__track">
+        {images.map((img, i) => (
+          <img
+            class="os-slider__slide"
+            src={img.src}
+            alt={img.alt}
+            loading={i === 0 ? "eager" : "lazy"}
+            decoding="async"
+            data-active={i === 0 ? "" : null}
+            onerror="this.style.display='none'"
+          />
+        ))}
+      </div>
+
+      {multi && (
+        <>
+          <button type="button" class="os-slider__nav os-slider__nav--prev" aria-label="Imagen anterior" data-prev>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+          <button type="button" class="os-slider__nav os-slider__nav--next" aria-label="Imagen siguiente" data-next>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+
+          <div class="os-slider__dots" role="tablist" aria-label="Imágenes de EON Mobile">
+            {images.map((_, i) => (
+              <button
+                type="button"
+                class="os-slider__dot"
+                role="tab"
+                aria-label={`Ir a imagen ${i + 1}`}
+                aria-selected={i === 0 ? "true" : "false"}
+                data-dot={i}
+              ></button>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .other {
+    background: var(--c-bg);
+    position: relative;
+  }
+  /* Misma línea neón superior que el stack de Venue, para encadenar visualmente */
+  .other::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--c-neon-cyan) 25%,
+      var(--c-neon-magenta) 75%,
+      transparent 100%
+    );
+    opacity: 0.55;
+  }
+
+  .other__inner {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: var(--space-7);
+    align-items: center;
+  }
+
+  /* --- Contenido --- */
+  .other__title {
+    font-size: var(--fs-3xl);
+    margin-block: var(--space-2) var(--space-3);
+  }
+  .other__subtitle {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--fs-lg);
+    color: var(--c-fg);
+    margin-bottom: var(--space-3);
+  }
+  .other__body {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: var(--fs-base);
+    color: var(--c-fg-muted);
+    max-width: 50ch;
+  }
+
+  .other__features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-block: var(--space-5) var(--space-6);
+  }
+  .other__feature {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--fs-base);
+    color: var(--c-fg);
+  }
+  .other__check {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    color: var(--c-bg);
+    background: var(--grad-brand);
+    box-shadow: 0 0 12px rgba(37, 212, 242, 0.45);
+  }
+
+  .other__cta { align-self: start; }
+
+  /* --- Media / slider --- */
+  .other__media {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--c-border);
+    background: var(--c-bg-elev);
+    box-shadow: var(--glow-brand);
+  }
+  .other__media-placeholder {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(37, 212, 242, 0.25), transparent 55%),
+      radial-gradient(circle at 70% 70%, rgba(232, 60, 200, 0.25), transparent 55%),
+      var(--c-bg-soft);
+  }
+
+  .os-slider__track { position: absolute; inset: 0; }
+  .os-slider__slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity var(--dur-base) var(--ease-out);
+  }
+  .os-slider__slide[data-active] { opacity: 1; }
+
+  .os-slider__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    color: var(--c-fg);
+    background: rgba(0, 0, 0, 0.45);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-pill);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition:
+      background var(--dur-fast) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out),
+      transform var(--dur-fast) var(--ease-out);
+  }
+  .os-slider__nav:hover {
+    background: rgba(232, 60, 200, 0.25);
+    box-shadow: 0 0 16px rgba(232, 60, 200, 0.45);
+  }
+  .os-slider__nav:active { transform: translateY(-50%) scale(0.95); }
+  .os-slider__nav--prev { left: var(--space-3); }
+  .os-slider__nav--next { right: var(--space-3); }
+
+  .os-slider__dots {
+    position: absolute;
+    left: 50%;
+    bottom: var(--space-3);
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    padding: 6px 10px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: var(--radius-pill);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  .os-slider__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.35);
+    transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast);
+  }
+  .os-slider__dot[aria-selected="true"] {
+    background: var(--c-neon-magenta);
+    transform: scale(1.25);
+    box-shadow: 0 0 8px var(--c-neon-magenta);
+  }
+
+  @media (max-width: 860px) {
+    .other__inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-5);
+    }
+    /* En mobile, primero la imagen y después el texto */
+    .other__media { order: 1; }
+    .other__content { order: 2; }
+    .os-slider__nav { width: 36px; height: 36px; }
+  }
+</style>
+
+<script>
+  /* Slider propio de "Otros servicios" (data-os-slider). Mismo patrón que
+     VenueBlock pero con selectores independientes para evitar doble init. */
+  document.querySelectorAll<HTMLElement>("[data-os-slider]").forEach((slider) => {
+    const slides = Array.from(
+      slider.querySelectorAll<HTMLImageElement>(".os-slider__slide")
+    );
+    const dots = Array.from(
+      slider.querySelectorAll<HTMLButtonElement>("[data-dot]")
+    );
+    const prev = slider.querySelector<HTMLButtonElement>("[data-prev]");
+    const next = slider.querySelector<HTMLButtonElement>("[data-next]");
+    if (slides.length < 2) return;
+
+    let index = 0;
+    const go = (i: number) => {
+      index = (i + slides.length) % slides.length;
+      slides.forEach((s, k) => {
+        if (k === index) s.setAttribute("data-active", "");
+        else s.removeAttribute("data-active");
+      });
+      dots.forEach((d, k) =>
+        d.setAttribute("aria-selected", k === index ? "true" : "false")
+      );
+    };
+
+    prev?.addEventListener("click", () => go(index - 1));
+    next?.addEventListener("click", () => go(index + 1));
+    dots.forEach((d, k) => d.addEventListener("click", () => go(k)));
+  });
+</script>

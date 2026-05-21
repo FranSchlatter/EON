@@ -2,7 +2,7 @@
 /**
  * EON · Landing one-page (long scroll)
  * Compone todas las secciones en orden:
- *   Header → Hero → Marquee → Video → Venue → Partners → Reservas → Dirección → Footer
+ *   Header → Hero → Marquee → Video → Venue → Otros servicios → Partners → Dirección → Footer
  */
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
@@ -10,6 +10,7 @@ import Hero from "../components/Hero.astro";
 import Marquee from "../components/Marquee.astro";
 import VenueVideo from "../components/VenueVideo.astro";
 import VenueSection from "../components/VenueSection.astro";
+import OtherServices from "../components/OtherServices.astro";
 import Partners from "../components/Partners.astro";
 import Location from "../components/Location.astro";
 import Footer from "../components/Footer.astro";
@@ -22,6 +23,7 @@ import Footer from "../components/Footer.astro";
     <Marquee />
     <VenueVideo />
     <VenueSection />
+    <OtherServices />
     <Partners />
     <Location />
   </main>
