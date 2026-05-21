@@ -8,8 +8,7 @@ export const site = {
   description:
     "La casa del gaming y los esports en Asunción, Paraguay. Vive la experiencia definitiva con nuestra arena competitiva Tier 1, estaciones gamer, simuladores profesionales MOZA, cabinas de streaming y producción, acompañados de una exclusiva barra con la mejor gastronomía y coctelería. El siguiente nivel te espera.",
   url: "https://eon.play",
-  email: "reservas@eon.play",
-  phone: "+595 0000 0000",
+  email: "info@eonplaythefuture.com",
   address: {
     street: "Esq. Itapúa y Tte. Primero Nemesio Quiñónez",
     city: "Asunción",
@@ -24,6 +23,7 @@ export const site = {
   socials: {
     instagram: "https://www.instagram.com/eon.play/",
     x: "https://x.com/eonplay_",
+    discord: "https://discord.gg/PJjKYauZpm",
   },
   // 1200x630 — placeholder SVG. Reemplazar por JPG/PNG real
   // (FB/IG no renderiza SVG en preview).

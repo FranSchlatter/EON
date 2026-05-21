@@ -30,7 +30,6 @@ const year = new Date().getFullYear();
         <p class="site-footer__heading">Contacto</p>
         <ul>
           <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
-          <li><a href={`tel:${site.phone.replace(/\s/g, "")}`}>{site.phone}</a></li>
           <li>{site.address.street}</li>
           <li>{site.address.city}</li>
         </ul>
@@ -41,6 +40,7 @@ const year = new Date().getFullYear();
         <ul>
           <li><a href={site.socials.instagram} target="_blank" rel="noopener">Instagram</a></li>
           <li><a href={site.socials.x} target="_blank" rel="noopener">X / Twitter</a></li>
+          <li><a href={site.socials.discord} target="_blank" rel="noopener">Discord</a></li>
         </ul>
       </div>
     </div>
@@ -48,7 +48,7 @@ const year = new Date().getFullYear();
 
   <div class="site-footer__bottom container">
     <p>© {year} {site.name}. {site.tagline}.</p>
-    <p class="site-footer__credit">Hecho por <span class="site-footer__maker">Innovatech</span></p>
+    <p class="site-footer__credit">Web diseñada por <span class="site-footer__maker">Innovatech</span></p>
   </div>
 </footer>
 

@@ -17,9 +17,9 @@ export const venueBlocks: VenueBlock[] = [
     id: "zona-gaming",
     eyebrow: "01 · Zona Gaming",
     title: "Tu setup de ensueño",
-    subtitle: "20 estaciones de élite",
+    subtitle: "12 estaciones de élite",
     body:
-      "20 estaciones de élite equipadas con lo último en hardware. El espacio ideal para quienes buscan el máximo rendimiento y una ventaja competitiva real en cada clic.",
+      "12 estaciones de élite equipadas con lo último en hardware. El espacio ideal para quienes buscan el máximo rendimiento y una ventaja competitiva real en cada clic.",
     images: [
       { src: "/images/EON_Setups.png", alt: "Zona Gaming en EON — setup 1" },
       { src: "/images/EON_Setups.png", alt: "Zona Gaming en EON — setup 2" },
@@ -106,5 +106,7 @@ export const eventTypes = [
   { value: "podcast", label: "Podcast / grabación" },
   { value: "comunidad", label: "Comunidad gaming / esports" },
   { value: "torneo", label: "Torneo / competencia" },
+  { value: "alquiler-domicilio", label: "Alquiler PC / Simuladores a domicilio" },
+  { value: "fiesta-dj", label: "Fiestas / DJ presentation" },
   { value: "otro", label: "Otro" },
 ] as const;
