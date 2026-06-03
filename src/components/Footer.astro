@@ -30,6 +30,13 @@ const year = new Date().getFullYear();
         <p class="site-footer__heading">Contacto</p>
         <ul>
           <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+          <li>
+            <a
+              href={`https://wa.me/${site.phone.wa}?text=${encodeURIComponent(site.phone.waText)}`}
+              target="_blank"
+              rel="noopener"
+            >{site.phone.display}</a>
+          </li>
           <li>{site.address.street}</li>
           <li>{site.address.city}</li>
         </ul>

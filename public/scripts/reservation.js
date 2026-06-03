@@ -100,7 +100,7 @@
 
       if (res.ok && data.success) {
         setStatus(
-          "¡Gracias! Recibimos tu solicitud y te vamos a contactar a la brevedad.",
+          "Entre 24 y 48 horas hábiles recibirás una respuesta de nuestro equipo.",
           "success"
         );
         form.reset();

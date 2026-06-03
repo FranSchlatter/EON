@@ -21,10 +21,14 @@ export const venueBlocks: VenueBlock[] = [
     body:
       "12 estaciones de élite equipadas con lo último en hardware. El espacio ideal para quienes buscan el máximo rendimiento y una ventaja competitiva real en cada clic.",
     images: [
-      { src: "/images/EON_Setups.png", alt: "Zona Gaming en EON — setup 1" },
-      { src: "/images/EON_Setups.png", alt: "Zona Gaming en EON — setup 2" },
-      { src: "/images/EON_Setups.png", alt: "Zona Gaming en EON — setup 3" },
-      { src: "/images/EON_Setups.png", alt: "Zona Gaming en EON — setup 4" },
+      { src: "/images/EON_Setups_1.jpg", alt: "Zona Gaming en EON — setup 1" },
+      { src: "/images/EON_Setups_2.jpg", alt: "Zona Gaming en EON — setup 2" },
+      { src: "/images/EON_Setups_3.jpg", alt: "Zona Gaming en EON — setup 3" },
+      { src: "/images/EON_Setups_4.jpg", alt: "Zona Gaming en EON — setup 4" },
+      { src: "/images/EON_Setups_5.jpg", alt: "Zona Gaming en EON — setup 5" },
+      { src: "/images/EON_Setups_6.jpg", alt: "Zona Gaming en EON — setup 6" },
+      { src: "/images/EON_Setups_7.JPG", alt: "Zona Gaming en EON — setup 7" },
+      { src: "/images/EON_Setups_8.JPG", alt: "Zona Gaming en EON — setup 8" },
     ],
   },
   {
@@ -35,10 +39,11 @@ export const venueBlocks: VenueBlock[] = [
     body:
       "Recargá energías con una propuesta gourmet y mixología de autor diseñada para acompañar tus sesiones de juego más exigentes.",
     images: [
-      { src: "/images/EON_Barra.png", alt: "Gastronomía & Cocktails de EON — barra 1" },
-      { src: "/images/EON_Barra.png", alt: "Gastronomía & Cocktails de EON — barra 2" },
-      { src: "/images/EON_Barra.png", alt: "Gastronomía & Cocktails de EON — barra 3" },
-      { src: "/images/EON_Barra.png", alt: "Gastronomía & Cocktails de EON — barra 4" },
+      { src: "/images/EON_Barra_1.jpg", alt: "Gastronomía & Cocktails de EON — barra 1" },
+      { src: "/images/EON_Barra_2.jpg", alt: "Gastronomía & Cocktails de EON — barra 2" },
+      { src: "/images/EON_Barra_3.jpg", alt: "Gastronomía & Cocktails de EON — barra 3" },
+      { src: "/images/EON_Barra_4.jpg", alt: "Gastronomía & Cocktails de EON — barra 4" },
+      { src: "/images/EON_Barra_5.jpg", alt: "Gastronomía & Cocktails de EON — barra 5" },
     ],
   },
   {
@@ -49,10 +54,14 @@ export const venueBlocks: VenueBlock[] = [
     body:
       "Sentí la presión del directo en nuestro stage 5v5. Un escenario profesional con capacidad para 100 espectadores, diseñado para convertir cada partida en un evento inolvidable.",
     images: [
-      { src: "/images/EON_Arena.png", alt: "Arena Tier 1 de EON — arena 1" },
-      { src: "/images/EON_Arena.png", alt: "Arena Tier 1 de EON — arena 2" },
-      { src: "/images/EON_Arena.png", alt: "Arena Tier 1 de EON — arena 3" },
-      { src: "/images/EON_Arena.png", alt: "Arena Tier 1 de EON — arena 4" },
+      { src: "/images/EON_Arena_1.jpg", alt: "Arena Tier 1 de EON — arena 1" },
+      { src: "/images/EON_Arena_2.jpg", alt: "Arena Tier 1 de EON — arena 2" },
+      { src: "/images/EON_Arena_3.jpg", alt: "Arena Tier 1 de EON — arena 3" },
+      { src: "/images/EON_Arena_4.jpg", alt: "Arena Tier 1 de EON — arena 4" },
+      { src: "/images/EON_Arena_5.jpg", alt: "Arena Tier 1 de EON — arena 5" },
+      { src: "/images/EON_Arena_6.jpg", alt: "Arena Tier 1 de EON — arena 6" },
+      { src: "/images/EON_Arena_7.jpg", alt: "Arena Tier 1 de EON — arena 7" },
+      { src: "/images/EON_Arena_8.jpg", alt: "Arena Tier 1 de EON — arena 8" },
     ],
   },
   {
@@ -63,10 +72,12 @@ export const venueBlocks: VenueBlock[] = [
     body:
       "Sentí la adrenalina en cada curva con tecnología de simulación de alta gama. El realismo del asfalto llevado al siguiente nivel.",
     images: [
-      { src: "/images/EON_Simuladores.png", alt: "Simuladores Profesionales en EON — simulador 1" },
-      { src: "/images/EON_Simuladores.png", alt: "Simuladores Profesionales en EON — simulador 2" },
-      { src: "/images/EON_Simuladores.png", alt: "Simuladores Profesionales en EON — simulador 3" },
-      { src: "/images/EON_Simuladores.png", alt: "Simuladores Profesionales en EON — simulador 4" },
+      { src: "/images/EON_Simuladores_1.jpg", alt: "Simuladores Profesionales en EON — simulador 1" },
+      { src: "/images/EON_Simuladores_2.jpg", alt: "Simuladores Profesionales en EON — simulador 2" },
+      { src: "/images/EON_Simuladores_3.jpg", alt: "Simuladores Profesionales en EON — simulador 3" },
+      { src: "/images/EON_Simuladores_4.jpg", alt: "Simuladores Profesionales en EON — simulador 4" },
+      { src: "/images/EON_Simuladores_5.jpg", alt: "Simuladores Profesionales en EON — simulador 5" },
+      { src: "/images/EON_Simuladores_6.JPG", alt: "Simuladores Profesionales en EON — simulador 6" },
     ],
   },
   {
@@ -77,10 +88,9 @@ export const venueBlocks: VenueBlock[] = [
     body:
       "Espacios privados y totalmente equipados con tecnología de broadcasting profesional. Llevá tu contenido a un nivel superior.",
     images: [
-      { src: "/images/EON_Streaming.png", alt: "Cabina de Streaming de EON — cabina 1" },
-      { src: "/images/EON_Streaming.png", alt: "Cabina de Streaming de EON — cabina 2" },
-      { src: "/images/EON_Streaming.png", alt: "Cabina de Streaming de EON — cabina 3" },
-      { src: "/images/EON_Streaming.png", alt: "Cabina de Streaming de EON — cabina 4" },
+      { src: "/images/EON_Streaming_1.jpg", alt: "Cabina de Streaming de EON — cabina 1" },
+      { src: "/images/EON_Streaming_2.jpg", alt: "Cabina de Streaming de EON — cabina 2" },
+      { src: "/images/EON_Streaming_3.jpg", alt: "Cabina de Streaming de EON — cabina 3" },
     ],
   },
 ];
