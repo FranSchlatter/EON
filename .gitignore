@@ -4,6 +4,9 @@ dist/
 .env
 .env.*
 !.env.example
+# Videos pesados: no se versionan en git (exceden el límite de GitHub).
+# Se sirven aparte (host/CDN) o se copian al deploy manualmente.
+public/videos/
 .DS_Store
 *.log
 .claude/
