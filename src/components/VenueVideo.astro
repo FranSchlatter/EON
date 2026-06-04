@@ -13,17 +13,57 @@ const hasVideo = true;
 
 <section class="venue-video section" aria-label="Tour del venue">
   <div class="container">
-    <div class="venue-video__frame reveal">
+    <div class="venue-video__frame reveal" data-player>
       {hasVideo ? (
-        <video
-          class="venue-video__el"
-          src="/videos/EON_Presentacion.mp4"
-          preload="metadata"
-          playsinline
-          muted
-          loop
-          autoplay
-        ></video>
+        <>
+          <video
+            class="venue-video__el"
+            data-video
+            src="/videos/EON_Presentacion.mp4"
+            preload="metadata"
+            playsinline
+            muted
+            loop
+            autoplay
+          ></video>
+
+          {/* Botón grande central (visible al pausar) */}
+          <button class="venue-video__bigplay" data-bigplay type="button" aria-label="Reproducir">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+          </button>
+
+          {/* Barra de controles */}
+          <div class="venue-video__controls">
+            <button class="vv-btn" data-action="playpause" type="button" aria-label="Reproducir / Pausar">
+              <svg class="vv-i vv-i--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+              <svg class="vv-i vv-i--pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3v14H7zM14 5h3v14h-3z" /></svg>
+            </button>
+
+            <button class="vv-btn" data-action="back" type="button" aria-label="Retroceder 10 segundos">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="1 4 1 10 7 10" /><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" /></svg>
+            </button>
+
+            <button class="vv-btn" data-action="fwd" type="button" aria-label="Adelantar 10 segundos">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10" /><path d="M20.49 15a9 9 0 1 1-2.13-9.36L23 10" /></svg>
+            </button>
+
+            <input class="vv-range vv-range--seek" data-seek type="range" min="0" max="100" value="0" step="0.1" aria-label="Progreso del video" />
+
+            <span class="venue-video__time" data-time>0:00 / 0:00</span>
+
+            <div class="venue-video__volume">
+              <button class="vv-btn" data-action="mute" type="button" aria-label="Silenciar / Activar sonido">
+                <svg class="vv-i vv-i--vol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" /><path d="M15.54 8.46a5 5 0 0 1 0 7.07" /><path d="M19.07 4.93a10 10 0 0 1 0 14.14" /></svg>
+                <svg class="vv-i vv-i--muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" /><line x1="23" y1="9" x2="17" y2="15" /><line x1="17" y1="9" x2="23" y2="15" /></svg>
+              </button>
+              <input class="vv-range vv-range--vol" data-volume type="range" min="0" max="1" value="0" step="0.05" aria-label="Volumen" />
+            </div>
+
+            <button class="vv-btn" data-action="fullscreen" type="button" aria-label="Pantalla completa">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" /></svg>
+            </button>
+          </div>
+        </>
       ) : (
         <div class="venue-video__placeholder">
           <div class="venue-video__pulse"></div>
@@ -33,6 +73,8 @@ const hasVideo = true;
     </div>
   </div>
 </section>
+
+<script type="module" src="/scripts/venue-video.js"></script>
 
 <style>
   .venue-video__frame {
@@ -44,9 +86,14 @@ const hasVideo = true;
     background: var(--c-bg-elev);
     box-shadow: var(--glow-brand);
   }
+  .venue-video__frame:focus-visible {
+    outline: 2px solid var(--c-neon-cyan);
+    outline-offset: 2px;
+  }
   .venue-video__el {
     width: 100%; height: 100%;
     object-fit: cover;
+    cursor: pointer;
   }
 
   .venue-video__placeholder {
@@ -96,5 +143,164 @@ const hasVideo = true;
     letter-spacing: var(--ls-wider);
     text-transform: uppercase;
     color: var(--c-fg-muted);
+  }
+
+  /* ============================================================
+     Reproductor custom — barra de controles
+     ============================================================ */
+
+  /* Botón grande central (play al pausar) */
+  .venue-video__bigplay {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 84px;
+    height: 84px;
+    display: grid;
+    place-items: center;
+    border: none;
+    border-radius: var(--radius-pill);
+    background: var(--grad-brand);
+    box-shadow: var(--glow-brand);
+    color: var(--c-bg);
+    cursor: pointer;
+    transition: opacity var(--dur-base) var(--ease-out),
+                transform var(--dur-fast) var(--ease-spring);
+  }
+  .venue-video__bigplay svg { width: 38px; height: 38px; fill: currentColor; margin-left: 4px; }
+  .venue-video__bigplay:hover { transform: scale(1.07); }
+  .venue-video__frame.is-playing .venue-video__bigplay {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.8);
+  }
+
+  /* Barra inferior */
+  .venue-video__controls {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: var(--z-content);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-5) var(--space-4) var(--space-3);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.82) 0%, rgba(0, 0, 0, 0.35) 55%, transparent 100%);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity var(--dur-base) var(--ease-out),
+                transform var(--dur-base) var(--ease-out);
+  }
+  /* Visible al pasar el mouse, con foco dentro, o cuando está pausado */
+  .venue-video__frame:hover .venue-video__controls,
+  .venue-video__frame:focus-within .venue-video__controls,
+  .venue-video__frame:not(.is-playing) .venue-video__controls {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Botones de control */
+  .vv-btn {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--c-fg);
+    cursor: pointer;
+    transition: color var(--dur-fast) var(--ease-out),
+                background var(--dur-fast) var(--ease-out);
+  }
+  .vv-btn svg { width: 20px; height: 20px; }
+  .vv-i { display: block; }
+  .vv-btn:hover { color: var(--c-neon-cyan); background: rgba(255, 255, 255, 0.08); }
+  .vv-btn:focus-visible { outline: 2px solid var(--c-neon-cyan); outline-offset: 1px; }
+
+  /* Toggle de íconos según estado */
+  .vv-i--pause, .vv-i--muted { display: none; }
+  .venue-video__frame.is-playing .vv-i--play { display: none; }
+  .venue-video__frame.is-playing .vv-i--pause { display: block; }
+  .venue-video__frame.is-muted .vv-i--vol { display: none; }
+  .venue-video__frame.is-muted .vv-i--muted { display: block; }
+
+  /* Tiempo */
+  .venue-video__time {
+    flex: none;
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    color: var(--c-fg-muted);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  /* Volumen (botón + slider) */
+  .venue-video__volume {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+  }
+  .vv-range--vol {
+    width: 0;
+    opacity: 0;
+    transition: width var(--dur-base) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+  }
+  .venue-video__volume:hover .vv-range--vol,
+  .venue-video__volume:focus-within .vv-range--vol {
+    width: 72px;
+    opacity: 1;
+  }
+
+  /* Sliders (range) con relleno neón */
+  .vv-range {
+    --fill: 0%;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 5px;
+    border-radius: var(--radius-pill);
+    background:
+      linear-gradient(90deg, var(--c-neon-cyan), var(--c-neon-magenta)) 0 / var(--fill) 100% no-repeat,
+      rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    outline: none;
+  }
+  .vv-range--seek { flex: 1; min-width: 60px; }
+  .vv-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: var(--c-fg);
+    box-shadow: var(--glow-cyan);
+    border: none;
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+  .vv-range::-moz-range-thumb {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: var(--c-fg);
+    box-shadow: var(--glow-cyan);
+    border: none;
+  }
+  .vv-range:hover::-webkit-slider-thumb,
+  .vv-range:focus-visible::-webkit-slider-thumb { transform: scale(1.25); }
+  .vv-range:focus-visible { box-shadow: 0 0 0 2px rgba(37, 212, 242, 0.4); }
+
+  @media (max-width: 600px) {
+    .venue-video__time { display: none; }
+    .vv-range--vol { display: none; }
+    .venue-video__controls { gap: var(--space-1); padding: var(--space-5) var(--space-3) var(--space-3); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .venue-video__bigplay,
+    .venue-video__controls,
+    .vv-range--vol { transition: none; }
   }
 </style>
