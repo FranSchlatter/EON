@@ -10,10 +10,11 @@
 import { eventTypes } from "../data/venue";
 import { site } from "../data/site";
 
-// TEMP: key de prueba (envíos van al mail de Franchi). Cambiar por la key de
-// info@eonplaythefuture.com cuando se pase a producción del cliente.
+// Key de producción del cliente (envíos a info@eonplaythefuture.com).
+// La real vive en .env (PUBLIC_WEB3FORMS_KEY); el fallback la replica para
+// builds sin .env. La access key de Web3Forms es pública (viaja al cliente).
 const accessKey =
-  import.meta.env.PUBLIC_WEB3FORMS_KEY || "5b7501a8-8b73-4808-8e7f-13197ee59aad";
+  import.meta.env.PUBLIC_WEB3FORMS_KEY || "63edc078-3fd3-4539-8d47-b8428941a8ec";
 ---
 
 <section class="reservations section" id="contacto">
