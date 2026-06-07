@@ -127,6 +127,9 @@
   @media (max-width: 720px) {
     .hero { padding-top: 88px; }
     .hero__scroll { display: none; }
+    /* --fs-hero no baja lo suficiente para que "INNOVADORES" (Orbitron,
+       mayúsculas, sin espacios) entre en pantallas angostas. */
+    .hero__title { font-size: clamp(2rem, 8vw, 2.75rem); }
   }
 
   /* --- Entrada coreografiada en page load -------------------- */
