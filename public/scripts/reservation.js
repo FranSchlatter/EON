@@ -40,7 +40,7 @@
 
     if (!accessKey || accessKey === "YOUR_ACCESS_KEY_HERE") {
       setStatus(
-        "El formulario aún no está configurado. Escribinos directo a info@eonplaythefuture.com.",
+        "El formulario aún no está configurado. Escribinos directo a Administracion@eonarenapy.com.",
         "error"
       );
       return;
@@ -107,13 +107,13 @@
       } else {
         setStatus(
           (data && data.message) ||
-            "No pudimos enviar tu solicitud. Probá de nuevo o escribinos a info@eonplaythefuture.com.",
+            "No pudimos enviar tu solicitud. Probá de nuevo o escribinos a Administracion@eonarenapy.com.",
           "error"
         );
       }
     } catch (err) {
       setStatus(
-        "Hubo un problema de conexión. Probá de nuevo o escribinos a info@eonplaythefuture.com.",
+        "Hubo un problema de conexión. Probá de nuevo o escribinos a Administracion@eonarenapy.com.",
         "error"
       );
     } finally {

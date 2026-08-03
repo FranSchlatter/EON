@@ -10,11 +10,11 @@
 import { eventTypes } from "../data/venue";
 import { site } from "../data/site";
 
-// Key de producción del cliente (envíos a info@eonplaythefuture.com).
+// Key de producción del cliente (envíos a Administracion@eonarenapy.com).
 // La real vive en .env (PUBLIC_WEB3FORMS_KEY); el fallback la replica para
 // builds sin .env. La access key de Web3Forms es pública (viaja al cliente).
 const accessKey =
-  import.meta.env.PUBLIC_WEB3FORMS_KEY || "63edc078-3fd3-4539-8d47-b8428941a8ec";
+  import.meta.env.PUBLIC_WEB3FORMS_KEY || "589ff66e-c8e5-4760-8796-6f6dcb77b188";
 ---
 
 <section class="reservations section" id="contacto">
@@ -47,6 +47,16 @@ const accessKey =
       <input type="hidden" name="redirect" value="false" />
       {/* Honeypot anti-spam (no debe completarse) */}
       <input type="checkbox" name="botcheck" class="sr-only" tabindex="-1" autocomplete="off" />
+
+      <div class="reservations__warning" role="alert">
+        <span class="reservations__warning-icon" aria-hidden="true">⚠</span>
+        <p>
+          Si vas a reservar una <strong>PC, Simulador o PlayStation</strong>, NO
+          completes este formulario. Podés venir directo al local y alquilar en el
+          momento. Este espacio es exclusivo para eventos que requieren
+          coordinación previa.
+        </p>
+      </div>
 
       <div class="field">
         <label for="name">Nombre completo</label>
@@ -147,6 +157,29 @@ const accessKey =
     padding: var(--space-6);
     box-shadow: 0 0 64px rgba(139, 94, 229, 0.08) inset;
   }
+
+  .reservations__warning {
+    display: flex;
+    gap: var(--space-3);
+    align-items: flex-start;
+    background: rgba(255, 59, 59, 0.08);
+    border: 1px solid rgba(255, 59, 59, 0.5);
+    border-radius: var(--radius-sm);
+    padding: var(--space-3) var(--space-4);
+    color: #ff6b6b;
+    box-shadow: 0 0 24px rgba(255, 59, 59, 0.12) inset;
+  }
+  .reservations__warning-icon {
+    font-size: 1.25em;
+    line-height: 1.4;
+    flex-shrink: 0;
+  }
+  .reservations__warning p {
+    margin: 0;
+    font-size: var(--fs-sm);
+    line-height: 1.5;
+  }
+  .reservations__warning strong { color: #ff8a8a; }
 
   .field { display: flex; flex-direction: column; gap: var(--space-2); }
   .field-row {
